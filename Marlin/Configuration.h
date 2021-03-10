@@ -20,7 +20,7 @@
  *
  */
 #pragma once
-//test
+
 
 /**
  * Configuration.h
@@ -71,7 +71,7 @@
 // @section info
 
 // Author info of this build printed to the host during boot and M115
-#define STRING_CONFIG_H_AUTHOR "Jacob Myers" // Who made the changes.
+#define STRING_CONFIG_H_AUTHOR "Henri J. Norden" // Who made the changes.
 //#define CUSTOM_VERSION_FILE Version.h // Path from the root directory (no quotes)
 
 /**
@@ -870,6 +870,7 @@
  * The "Manual Probe" provides a means to do "Auto" Bed Leveling without a probe.
  * Use G29 repeatedly, adjusting the Z height at each point with movement commands
  * or (with LCD_BED_LEVELING) the LCD controller.
+ * (Do not enable this for manual EXT-UI UBL!)
  */
 //#define PROBE_MANUALLY
 //#define MANUAL_PROBE_START_Z 0.2
@@ -1044,7 +1045,7 @@
  * A total of 2 does fast/slow probes with a weighted average.
  * A total of 3 or more adds more slow probes, taking the average.
  */
-//#define MULTIPLE_PROBING 2
+#define MULTIPLE_PROBING 2
 //#define EXTRA_PROBING    1
 
 /**
@@ -1170,7 +1171,7 @@
 #define X_MIN_POS 0
 #define Y_MIN_POS 0
 #define Z_MIN_POS 0
-#define X_MAX_POS X_BED_SIZE
+#define X_MAX_POS 249
 #define Y_MAX_POS Y_BED_SIZE
 #define Z_MAX_POS 250
 
@@ -1316,7 +1317,7 @@
 //#define AUTO_BED_LEVELING_3POINT
 //#define AUTO_BED_LEVELING_LINEAR
 //#define AUTO_BED_LEVELING_BILINEAR
-//#define AUTO_BED_LEVELING_UBL
+#define AUTO_BED_LEVELING_UBL
 //#define MESH_BED_LEVELING
 
 /**
@@ -1324,7 +1325,7 @@
  * these options to restore the prior leveling state or to always enable
  * leveling immediately after G28.
  */
-//#define RESTORE_LEVELING_AFTER_G28
+#define RESTORE_LEVELING_AFTER_G28
 //#define ENABLE_LEVELING_AFTER_G28
 
 /**
@@ -1361,7 +1362,7 @@
   /**
    * Enable the G26 Mesh Validation Pattern tool.
    */
-  //#define G26_MESH_VALIDATION
+  #define G26_MESH_VALIDATION
   #if ENABLED(G26_MESH_VALIDATION)
     #define MESH_TEST_NOZZLE_SIZE    0.4  // (mm) Diameter of primary nozzle.
     #define MESH_TEST_LAYER_HEIGHT   0.2  // (mm) Default layer height for the G26 Mesh Validation Tool.
@@ -1408,12 +1409,14 @@
 
   //#define MESH_EDIT_GFX_OVERLAY   // Display a graphics overlay while editing the mesh
 
-  #define MESH_INSET 1              // Set Mesh bounds as an inset region of the bed
-  #define GRID_MAX_POINTS_X 10      // Don't use more than 15 points per axis, implementation limited.
+  #define MESH_INSET 15              // Set Mesh bounds as an inset region of the bed
+  #define GRID_MAX_POINTS_X 3      // Don't use more than 15 points per axis, implementation limited.
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
   #define UBL_MESH_EDIT_MOVES_Z     // Sophisticated users prefer no movement of nozzle
-  #define UBL_SAVE_ACTIVE_ON_M500   // Save the currently active mesh in the current slot on M500
+  //#define UBL_SAVE_ACTIVE_ON_M500   // Save the currently active mesh in the current slot on M500
+   //  !NB! Do not uncomment UBL_SAVE_ACTIVE_ON_M500 otherwise using the tilt command 'G29 J' 
+  //  (e.g. from the auto-level menu item) can end up overwriting your original mesh with a tilted one!
 
   //#define UBL_Z_RAISE_WHEN_OFF_MESH 2.5 // When the nozzle is off the mesh, this value is used
                                           // as the Z-Height correction value.
