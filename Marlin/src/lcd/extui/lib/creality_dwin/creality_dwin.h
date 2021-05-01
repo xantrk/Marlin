@@ -36,7 +36,7 @@ enum processID : uint8_t {
 };
 
 enum popupID : uint8_t {
-  Pause, Stop, Resume, SaveLevel, ETemp, ConfLevel, ConfFilChange, Level, Home, MoveWait, Heating, Complete, FilLoad, FilChange, UI, TempWarn, Runout, PIDWait
+  Pause, Stop, Resume, SaveLevel, ETemp, ConfFilChange, Level, Home, MoveWait, Heating, Complete, FilLoad, FilChange, UI, TempWarn, Runout, PIDWait
 };
 
 enum menuID : uint8_t {
@@ -66,13 +66,15 @@ enum menuID : uint8_t {
       Visual,
         ColorSettings,
       Advanced,
+        ProbeMenu,
       Info,
-    ManualMesh,
-    UBL,
-      UBLView,
+    Leveling,
+      LevelManual,
+      LevelView,
       MeshViewer,
-      UBLSettings,
-      UBLManual,
+      LevelSettings,
+      ManualMesh,
+      UBLMesh,
     InfoMain,
   Tune,
   PreheatHotend
@@ -214,7 +216,7 @@ enum colorID : uint8_t {
   Default, White, Green, Cyan, Blue, Magenta, Red, Orange, Yellow, Brown, Black
 };
 
-#define Custom_Colors       9
+#define Custom_Colors       10
 #define Color_White         0xFFFF
 #define Color_Light_White   0xBDD7
 #define Color_Green         0x07E0
@@ -280,7 +282,7 @@ public:
   inline void Draw_Title(char* title);
   inline void Draw_Menu_Item(uint8_t row, uint8_t icon=0, char * const label1=NULL, char * const label2=NULL, bool more=false, bool centered=false);
   inline void Draw_Menu(uint8_t menu, uint8_t select=0, uint8_t scroll=0);
-  inline void Redraw_Menu();
+  inline void Redraw_Menu(bool lastselection=false, bool lastmenu=false);
   inline void Redraw_Screen();
 
 
