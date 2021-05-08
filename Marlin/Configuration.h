@@ -552,9 +552,9 @@
   //#define PID_BED_DEBUG // Sends debug data to the serial port.
 
   // Ender 3 V2
-  #define DEFAULT_bedKp 462.10
-  #define DEFAULT_bedKi  85.47
-  #define DEFAULT_bedKd 624.59
+  #define DEFAULT_bedKp 17.82
+  #define DEFAULT_bedKi  1.06
+  #define DEFAULT_bedKd 198.13
 
   // FIND YOUR OWN: "M303 E-1 C8 S90" to run autotune on the bed at 90 degreesC for 8 cycles.
 #endif // PIDTEMPBED
@@ -1356,7 +1356,7 @@
 // @section calibrate
 
 /**
- * Choose one of the options below to enable G29 Bed Leveling. The parameters
+ * Choose one of the options below to enable G29 Bed Levelinfg. The parameters
  * and behavior of G29 will change depending on your selection.
  *
  *  If using a Probe for Z Homing, enable Z_SAFE_HOMING also!
