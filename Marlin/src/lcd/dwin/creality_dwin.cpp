@@ -27,12 +27,11 @@
 
 #include "../../inc/MarlinConfigPre.h"
 
-#if ENABLED(CREALITY_DWIN_EXTUI)
+#if ENABLED(DWIN_CREALITY_LCD)
 
 #include "creality_dwin.h"
-#include "../ui_api.h"
 
-#include "../../marlinui.h"
+#include "../marlinui.h"
 #include "../../MarlinCore.h"
 
 #include "../../module/temperature.h"
@@ -250,7 +249,6 @@ CrealityDWINClass CrealityDWIN;
           }
 
           mesh_z_values[i][j] = mz - lsf_results.D;
-          ExtUI::onMeshUpdate(i, j, mesh_z_values[i][j]);
         }
         return false;
       }
@@ -393,13 +391,13 @@ CrealityDWINClass CrealityDWIN;
 //  3=Title bar and Menu area (default)
 //  2=Menu area
 //  1=Title bar
-inline void CrealityDWINClass::Clear_Screen(uint8_t e/*=3*/) {
+void CrealityDWINClass::Clear_Screen(uint8_t e/*=3*/) {
   if (e==1||e==3||e==4) DWIN_Draw_Rectangle(1, GetColor(eeprom_settings.menu_top_bg, Color_Bg_Blue, false), 0, 0, DWIN_WIDTH, TITLE_HEIGHT); // Clear Title Bar
   if (e==2||e==3) DWIN_Draw_Rectangle(1, Color_Bg_Black, 0, 31, DWIN_WIDTH, STATUS_Y); // Clear Menu Area
   if (e==4) DWIN_Draw_Rectangle(1, Color_Bg_Black, 0, 31, DWIN_WIDTH, DWIN_HEIGHT); // Clear Popup Area
 }
 
-inline void CrealityDWINClass::Draw_Float(float value, uint8_t row, bool selected/*=false*/, uint8_t minunit/*=10*/) {
+void CrealityDWINClass::Draw_Float(float value, uint8_t row, bool selected/*=false*/, uint8_t minunit/*=10*/) {
   uint16_t bColor = (selected) ? Select_Color : Color_Bg_Black;
   if (isnan(value)) {
     DWIN_Draw_String(false, true, DWIN_FONT_MENU, Color_White, bColor, 196, MBASE(row), F(" NaN"));
@@ -413,14 +411,14 @@ inline void CrealityDWINClass::Draw_Float(float value, uint8_t row, bool selecte
   }
 }
 
-inline void CrealityDWINClass::Draw_Option(uint8_t value, char** options, uint8_t row, bool selected/*=false*/, bool color/*=false*/) {
+void CrealityDWINClass::Draw_Option(uint8_t value, char** options, uint8_t row, bool selected/*=false*/, bool color/*=false*/) {
   uint16_t bColor = (selected) ? Select_Color : Color_Bg_Black;
   uint16_t tColor = (color) ? GetColor(value, Color_White, false) : Color_White;
   DWIN_Draw_Rectangle(1, bColor, 202, MBASE(row) + 14, 258, MBASE(row) - 2);
   DWIN_Draw_String(false, false, DWIN_FONT_MENU, tColor, bColor, 202, MBASE(row) - 1, options[value]);
 }
 
-inline uint16_t CrealityDWINClass::GetColor(uint8_t color, uint16_t original, bool light/*=false*/) {
+uint16_t CrealityDWINClass::GetColor(uint8_t color, uint16_t original, bool light/*=false*/) {
   switch (color){
     case Default:
       return original;
@@ -459,11 +457,11 @@ inline uint16_t CrealityDWINClass::GetColor(uint8_t color, uint16_t original, bo
   return Color_White;
 }
 
-inline void CrealityDWINClass::Draw_Title(char *title) {
+void CrealityDWINClass::Draw_Title(char *title) {
   DWIN_Draw_String(false, false, DWIN_FONT_HEAD, GetColor(eeprom_settings.menu_top_txt, Color_White, false), Color_Bg_Blue, (DWIN_WIDTH - strlen(title) * STAT_CHR_W) / 2, 5, title);
 }
 
-inline void CrealityDWINClass::Draw_Menu_Item(uint8_t row, uint8_t icon/*=0*/, char *label1, char *label2, bool more/*=false*/, bool centered/*=false*/) {
+void CrealityDWINClass::Draw_Menu_Item(uint8_t row, uint8_t icon/*=0*/, char *label1, char *label2, bool more/*=false*/, bool centered/*=false*/) {
   const uint8_t label_offset_y = !(label1 && label2) ? 0 : MENU_CHR_H * 3 / 5;
   const uint8_t label1_offset_x = !centered ? LBLX : LBLX * 4/5 + max(LBLX * 1U/5, (DWIN_WIDTH - LBLX - (label1 ? strlen(label1) : 0) * MENU_CHR_W) / 2);
   const uint8_t label2_offset_x = !centered ? LBLX : LBLX * 4/5 + max(LBLX * 1U/5, (DWIN_WIDTH - LBLX - (label2 ? strlen(label2) : 0) * MENU_CHR_W) / 2);
@@ -474,8 +472,8 @@ inline void CrealityDWINClass::Draw_Menu_Item(uint8_t row, uint8_t icon/*=0*/, c
   DWIN_Draw_Line(GetColor(eeprom_settings.menu_split_line, Line_Color, true), 16, MBASE(row) + 33, 256, MBASE(row) + 33); // Draw Menu Line
 }
 
-inline void CrealityDWINClass::Draw_Checkbox(uint8_t row, bool value) {
-  #if ENABLED(CREALITY_DWIN_EXTUI_CUSTOM_ICONS) // Draw appropriate checkbox icon
+void CrealityDWINClass::Draw_Checkbox(uint8_t row, bool value) {
+  #if ENABLED(DWIN_CREALITY_LCD_CUSTOM_ICONS) // Draw appropriate checkbox icon
     DWIN_ICON_Show(ICON, (value ? ICON_Checkbox_T : ICON_Checkbox_F), 226, MBASE(row) - 3); 
   #else                                         // Draw a basic checkbox using rectangles and lines
     DWIN_Draw_Rectangle(1, Color_Bg_Black, 226, MBASE(row) - 3, 226 + 20, MBASE(row) - 3 + 20);
@@ -491,12 +489,12 @@ inline void CrealityDWINClass::Draw_Checkbox(uint8_t row, bool value) {
   #endif
 }
 
-inline void CrealityDWINClass::Draw_Menu(uint8_t menu, uint8_t select/*=0*/, uint8_t scroll/*=0*/) {
+void CrealityDWINClass::Draw_Menu(uint8_t menu, uint8_t select/*=0*/, uint8_t scroll/*=0*/) {
   if (active_menu!=menu) {
     last_menu = active_menu;
     if (process == Menu) last_selection = selection;
   }
-  selection = select;
+  selection = min(select, Get_Menu_Size(menu));
   scrollpos = scroll;
   if (selection-scrollpos > MROWS)
     scrollpos = selection - MROWS;
@@ -508,17 +506,25 @@ inline void CrealityDWINClass::Draw_Menu(uint8_t menu, uint8_t select/*=0*/, uin
   DWIN_Draw_Rectangle(1, GetColor(eeprom_settings.cursor_color, Rectangle_Color), 0, MBASE(selection-scrollpos) - 18, 14, MBASE(selection-scrollpos) + 33);
 }
 
-inline void CrealityDWINClass::Redraw_Menu(bool lastselection/*=false*/, bool lastmenu/*=false*/) {
-  if (active_menu == MainMenu) {
-    Draw_Main_Menu(selection);
-  }
-  else {
-    Draw_Menu((lastmenu) ? last_menu : active_menu, (lastselection) ? last_selection : selection, (lastmenu) ? 0 : scrollpos);
+void CrealityDWINClass::Redraw_Menu(bool lastprocess/*=true*/, bool lastselection/*=false*/, bool lastmenu/*=false*/) {
+  switch((lastprocess) ? last_process : process) {
+    case Menu:
+      Draw_Menu((lastmenu) ? last_menu : active_menu, (lastselection) ? last_selection : selection, (lastmenu) ? 0 : scrollpos);
+      break;
+    case Main:
+      Draw_Main_Menu((lastselection) ? last_selection : selection);
+      break;
+    case Print:
+      Draw_Print_Screen();
+      break;
+    case File:
+      Draw_SD_List();
+      break;
   }
 }
 
-inline void CrealityDWINClass::Redraw_Screen() {
-  Redraw_Menu();
+void CrealityDWINClass::Redraw_Screen() {
+  Redraw_Menu(false);
   Draw_Status_Area(true);
   Update_Status_Bar(true);
 }
@@ -897,6 +903,7 @@ void CrealityDWINClass::Draw_Status_Area(bool icons/*=false*/) {
 }
 
 void CrealityDWINClass::Draw_Popup(const char *line1, const char *line2,const char *line3, uint8_t mode, uint8_t icon/*=0*/) {
+  if (process != Confirm && process != Popup && process != Wait) last_process = process;
   if (process == Menu && mode == Popup) last_selection = selection;
   process = mode;
   Clear_Screen();
@@ -2002,6 +2009,8 @@ void CrealityDWINClass::Menu_Item_Handler(uint8_t menu, uint8_t item, bool draw/
               char buf[30];
               sprintf(buf, "M303 E0 C%i S%i U1", PID_cycles, PID_e_temp);
               gcode.process_subcommands_now_P(buf);
+              planner.synchronize();
+              Redraw_Menu();
             }
             break;
           case HOTENDPID_TEMP:
@@ -2074,6 +2083,8 @@ void CrealityDWINClass::Menu_Item_Handler(uint8_t menu, uint8_t item, bool draw/
               char buf[30];
               sprintf(buf, "M303 E-1 C%i S%i U1", PID_cycles, PID_bed_temp);
               gcode.process_subcommands_now_P(buf);
+              planner.synchronize();
+              Redraw_Menu();
             }
             break;
           case BEDPID_TEMP:
@@ -3002,11 +3013,11 @@ void CrealityDWINClass::Menu_Item_Handler(uint8_t menu, uint8_t item, bool draw/
           case ADVANCED_FILSENSORENABLED:
             if (draw) {
               Draw_Menu_Item(row, ICON_Extruder, (char*)"Filament Sensor");
-              Draw_Checkbox(row, ExtUI::getFilamentRunoutEnabled());
+              Draw_Checkbox(row, runout.enabled);
             }
             else {
-              ExtUI::setFilamentRunoutEnabled(!ExtUI::getFilamentRunoutEnabled());
-              Draw_Checkbox(row, ExtUI::getFilamentRunoutEnabled());
+              runout.enabled = !runout.enabled;
+              Draw_Checkbox(row, runout.enabled);
             }
             break;
           #if ENABLED(HAS_FILAMENT_RUNOUT_DISTANCE)
@@ -3122,9 +3133,9 @@ void CrealityDWINClass::Menu_Item_Handler(uint8_t menu, uint8_t item, bool draw/
               sprintf(row2, "%.2f m filament used", ps.filamentUsed / 1000);
               Draw_Menu_Item(INFO_PRINTCOUNT, ICON_HotendTemp, row1, row2, false, true);
 
-              ExtUI::getTotalPrintTime_str(buf);
+              duration_t(print_job_timer.getStats().printTime).toString(buf);
               sprintf(row1, "Printed: %s", buf);
-              ExtUI::getLongestPrint_str(buf);
+              duration_t(print_job_timer.getStats().longestPrint).toString(buf);
               sprintf(row2, "Longest: %s", buf);
               Draw_Menu_Item(INFO_PRINTTIME, ICON_PrintTime, row1, row2, false, true);
             #endif
@@ -3174,7 +3185,7 @@ void CrealityDWINClass::Menu_Item_Handler(uint8_t menu, uint8_t item, bool draw/
               if (!planner.leveling_active) {
                 set_bed_leveling_enabled(!planner.leveling_active);
                 if (!planner.leveling_active) {
-                  Confirm_Handler((char*)"Couldn't enable Leveling");
+                  Confirm_Handler(LevelError);
                   break;
                 }
               }
@@ -3262,7 +3273,7 @@ void CrealityDWINClass::Menu_Item_Handler(uint8_t menu, uint8_t item, bool draw/
             else {
               #if ENABLED(AUTO_BED_LEVELING_BILINEAR)
                 if (!leveling_is_valid()) {
-                  Confirm_Handler((char*)"Invalid Mesh");
+                  Confirm_Handler(InvalidMesh);
                   break;
                 }
               #endif
@@ -3430,7 +3441,6 @@ void CrealityDWINClass::Menu_Item_Handler(uint8_t menu, uint8_t item, bool draw/
                 }
                 else {
                   if (mesh_conf.create_plane_from_mesh()) {
-                    Confirm_Handler((char*)"Error: Couldn't create plane!");
                     break;
                   }
                   gcode.process_subcommands_now_P(PSTR("M420 S1"));
@@ -3601,7 +3611,7 @@ void CrealityDWINClass::Menu_Item_Handler(uint8_t menu, uint8_t item, bool draw/
             }
             else {
               mesh_conf.manual_value_update(true);
-              Redraw_Menu();
+              Redraw_Menu(false);
             }
             break;
           #endif
@@ -3814,8 +3824,7 @@ void CrealityDWINClass::Menu_Item_Handler(uint8_t menu, uint8_t item, bool draw/
               mesh_x = GRID_MAX_POINTS_X - mesh_x - 1;
             }
 
-            const xy_uint8_t mesh_pos { mesh_x, mesh_y };
-            const float currval = ExtUI::getMeshPoint(mesh_pos);
+            const float currval = mesh_conf.mesh_z_values[mesh_x][mesh_y];
 
             if (draw) {
               Draw_Menu_Item(row, ICON_Zoffset, (char*)"Goto Mesh Value");
@@ -3959,11 +3968,11 @@ void CrealityDWINClass::Menu_Item_Handler(uint8_t menu, uint8_t item, bool draw/
           case TUNE_FILSENSORENABLED:
             if (draw) {
               Draw_Menu_Item(row, ICON_Extruder, (char*)"Filament Sensor");
-              Draw_Checkbox(row, ExtUI::getFilamentRunoutEnabled());
+              Draw_Checkbox(row, runout.enabled);
             }
             else {
-              ExtUI::setFilamentRunoutEnabled(!ExtUI::getFilamentRunoutEnabled());
-              Draw_Checkbox(row, ExtUI::getFilamentRunoutEnabled());
+              runout.enabled = !runout.enabled;
+              Draw_Checkbox(row, runout.enabled);
             }
             break;
         #endif
@@ -3989,14 +3998,14 @@ void CrealityDWINClass::Menu_Item_Handler(uint8_t menu, uint8_t item, bool draw/
     case PreheatHotend:
 
         #define PREHEATHOTEND_BACK 0
-        #define PREHEATHOTEND_1 (PREHEATHOTEND_BACK + (PREHEAT_COUNT >= 1))
+        #define PREHEATHOTEND_CONTINUE (PREHEATHOTEND_BACK + 1)
+        #define PREHEATHOTEND_1 (PREHEATHOTEND_CONTINUE + (PREHEAT_COUNT >= 1))
         #define PREHEATHOTEND_2 (PREHEATHOTEND_1 + (PREHEAT_COUNT >= 2))
         #define PREHEATHOTEND_3 (PREHEATHOTEND_2 + (PREHEAT_COUNT >= 3))
         #define PREHEATHOTEND_4 (PREHEATHOTEND_3 + (PREHEAT_COUNT >= 4))
         #define PREHEATHOTEND_5 (PREHEATHOTEND_4 + (PREHEAT_COUNT >= 5))
         #define PREHEATHOTEND_CUSTOM (PREHEATHOTEND_5 + 1)
-        #define PREHEATHOTEND_CONTINUE (PREHEATHOTEND_CUSTOM + 1)
-        #define PREHEATHOTEND_TOTAL PREHEATHOTEND_CONTINUE
+        #define PREHEATHOTEND_TOTAL PREHEATHOTEND_CUSTOM
 
         switch (item) {
           case PREHEATHOTEND_BACK:
@@ -4006,7 +4015,48 @@ void CrealityDWINClass::Menu_Item_Handler(uint8_t menu, uint8_t item, bool draw/
             else {
               thermalManager.setTargetHotend(0, 0);
               thermalManager.set_fan_speed(0, 0);
-              Redraw_Menu(true, true);
+              Redraw_Menu(false, true, true);
+            }
+            break;
+          case PREHEATHOTEND_CONTINUE:
+            if (draw) {
+              Draw_Menu_Item(row, ICON_SetEndTemp, (char*)"Continue");
+            }
+            else {
+              Popup_Handler(Heating);
+              thermalManager.wait_for_hotend(0);
+              switch (last_menu) {
+                case Prepare:
+                  Popup_Handler(FilChange);
+                  char buf[20];
+                  sprintf(buf, "M600 B1 R%i", thermalManager.temp_hotend[0].target);
+                  gcode.process_subcommands_now_P(buf);
+                  break;
+                #if ENABLED(FILAMENT_LOAD_UNLOAD_GCODES)
+                  case ChangeFilament:
+                    switch (last_selection) {
+                      case CHANGEFIL_LOAD:
+                        Popup_Handler(FilLoad);
+                        gcode.process_subcommands_now_P("M701");
+                        planner.synchronize();
+                        Redraw_Menu(true, true, true);
+                        break;
+                      case CHANGEFIL_UNLOAD:
+                        Popup_Handler(FilLoad, true);
+                        gcode.process_subcommands_now_P("M702");
+                        planner.synchronize();
+                        Redraw_Menu(true, true, true);
+                        break;
+                      case CHANGEFIL_CHANGE:
+                        Popup_Handler(FilChange);
+                        char buf[20];
+                        sprintf(buf, "M600 B1 R%i", thermalManager.temp_hotend[0].target);
+                        gcode.process_subcommands_now_P(buf);
+                        break;
+                    }
+                    break;
+                #endif
+              }
             }
             break;
           #if (PREHEAT_COUNT >= 1)
@@ -4071,47 +4121,6 @@ void CrealityDWINClass::Menu_Item_Handler(uint8_t menu, uint8_t item, bool draw/
             }
             else {
               Modify_Value(thermalManager.temp_hotend[0].target, EXTRUDE_MINTEMP, MAX_E_TEMP, 1);
-            }
-            break;
-          case PREHEATHOTEND_CONTINUE:
-            if (draw) {
-              Draw_Menu_Item(row, ICON_SetEndTemp, (char*)"Continue");
-            }
-            else {
-              Popup_Handler(Heating);
-              thermalManager.wait_for_hotend(0);
-              switch (last_menu) {
-                case Prepare:
-                  Popup_Handler(FilChange);
-                  char buf[20];
-                  sprintf(buf, "M600 B1 R%i", thermalManager.temp_hotend[0].target);
-                  gcode.process_subcommands_now_P(buf);
-                  break;
-                #if ENABLED(FILAMENT_LOAD_UNLOAD_GCODES)
-                  case ChangeFilament:
-                    switch (last_selection) {
-                      case CHANGEFIL_LOAD:
-                        Popup_Handler(FilLoad);
-                        gcode.process_subcommands_now_P("M701");
-                        planner.synchronize();
-                        Redraw_Menu(true, true);
-                        break;
-                      case CHANGEFIL_UNLOAD:
-                        Popup_Handler(FilLoad, true);
-                        gcode.process_subcommands_now_P("M702");
-                        planner.synchronize();
-                        Redraw_Menu(true, true);
-                        break;
-                      case CHANGEFIL_CHANGE:
-                        Popup_Handler(FilChange);
-                        char buf[20];
-                        sprintf(buf, "M600 B1 R%i", thermalManager.temp_hotend[0].target);
-                        gcode.process_subcommands_now_P(buf);
-                        break;
-                    }
-                    break;
-                #endif
-              }
             }
             break;
         }
@@ -4235,7 +4244,7 @@ char* CrealityDWINClass::Get_Menu_Title(uint8_t menu) {
   return (char*)"";
 }
 
-int CrealityDWINClass::Get_Menu_Size(uint8_t menu) {
+uint8_t CrealityDWINClass::Get_Menu_Size(uint8_t menu) {
   switch(menu) {
     case Prepare:
       return PREPARE_TOTAL;
@@ -4402,52 +4411,36 @@ void CrealityDWINClass::Popup_Handler(uint8_t popupid, bool option/*=false*/) {
     case PIDWait:
       Draw_Popup((char*)"PID Autotune", (char*)"in process", (char*)"Please wait until done.", Wait, ICON_BLTouch);
       break;
+    case Resuming:
+      Draw_Popup((char*)"Resuming Print", (char*)"Please wait until done.", (char*)"", Wait, ICON_BLTouch);
+      break;
   }
 }
 
-void CrealityDWINClass::Confirm_Handler(const char * const msg) {
-  if (process != Confirm) last_process = process;
-  popup = UI;
-  if (strcmp_P(msg, GET_TEXT(MSG_FILAMENT_CHANGE_INSERT)) == 0) {
-    Draw_Popup((char*)"Insert Filament", (char*)"Press to Continue", (char*)"", Confirm);
-  }
-  else if (strcmp_P(msg, GET_TEXT(MSG_HEATER_TIMEOUT)) == 0) {
-    Draw_Popup((char*)"Heater Timed Out", (char*)"Press to Reheat", (char*)"", Confirm);
-  }
-  else if (strcmp_P(msg, (char*)"Reheat finished.") == 0) {
-    Draw_Popup((char*)"Reheat Finished", (char*)"Press to Continue", (char*)"", Confirm);
-  }
-  else if (strcmp_P(msg, GET_TEXT(MSG_USERWAIT)) == 0) {
-    Draw_Popup((char*)"Waiting for Input", (char*)"Press to Continue", (char*)"", Confirm);
-  }
-  else if (strcmp_P(msg, GET_TEXT(MSG_NOZZLE_PARKED)) == 0) {
-  } 
-  else if (strcmp_P(msg, (char*)"Couldn't enable Leveling") == 0) {
-    Draw_Popup((char*)"Couldn't enable Leveling", (char*)"(Valid mesh must exist)", (char*)"", Confirm);
-  }
-  else if (strcmp_P(msg, (char*)"Invalid Mesh") == 0) {
-    Draw_Popup((char*)"Valid mesh must exist", (char*)"before tuning can be", (char*)"performed", Confirm);
-  }
-  else if (strcmp_P(msg, (char*)"Bad extruder number") == 0) {
-    Draw_Popup((char*)"PID Autotune failed", (char*)"Bad extruder number", (char*)"", Confirm);
-  }
-  else if (strcmp_P(msg, (char*)"Temp too high") == 0) {
-    Draw_Popup((char*)"PID Autotune failed", (char*)"Temp too high!", (char*)"", Confirm);
-  }
-  else if (strcmp_P(msg, (char*)"PID Timeout") == 0) {
-    Draw_Popup((char*)"PID Autotune failed", (char*)"Timeout!", (char*)"", Confirm);
-  }
-  else if (strcmp_P(msg, (char*)"PID Done") == 0) {
-    Draw_Popup((char*)"PID tuning done", (char*)"", (char*)"", Confirm);
-  }
-  else {
-    Draw_Popup(msg, (char*)"Press to Continue", (char*)"", Confirm);
+void CrealityDWINClass::Confirm_Handler(uint8_t popupid) {
+  popup = popupid;
+  switch (popupid) {
+    case FilInsert:
+      Draw_Popup((char*)"Insert Filament", (char*)"Press to Continue", (char*)"", Confirm);
+      break;
+    case HeaterTime:
+      Draw_Popup((char*)"Heater Timed Out", (char*)"Press to Reheat", (char*)"", Confirm);
+      break;
+    case UserInput:
+      Draw_Popup((char*)"Waiting for Input", (char*)"Press to Continue", (char*)"", Confirm);
+      break;
+    case LevelError:
+      Draw_Popup((char*)"Couldn't enable Leveling", (char*)"(Valid mesh must exist)", (char*)"", Confirm);
+      break;
+    case InvalidMesh:
+      Draw_Popup((char*)"Valid mesh must exist", (char*)"before tuning can be", (char*)"performed", Confirm);
+      break;
   }
 }
 
 /* Navigation and Control */
 
-inline void CrealityDWINClass::Main_Menu_Control() {
+void CrealityDWINClass::Main_Menu_Control() {
   ENCODER_DiffState encoder_diffState = Encoder_ReceiveAnalyze();
   if (encoder_diffState == ENCODER_DIFF_NO) return;
   if (encoder_diffState == ENCODER_DIFF_CW && selection < 3) {
@@ -4481,7 +4474,7 @@ inline void CrealityDWINClass::Main_Menu_Control() {
   DWIN_UpdateLCD();
 }
 
-inline void CrealityDWINClass::Menu_Control() {
+void CrealityDWINClass::Menu_Control() {
   ENCODER_DiffState encoder_diffState = Encoder_ReceiveAnalyze();
   if (encoder_diffState == ENCODER_DIFF_NO) return;
   if (encoder_diffState == ENCODER_DIFF_CW && selection < Get_Menu_Size(active_menu)) {
@@ -4509,7 +4502,7 @@ inline void CrealityDWINClass::Menu_Control() {
   DWIN_UpdateLCD();
 }
 
-inline void CrealityDWINClass::Value_Control() {
+void CrealityDWINClass::Value_Control() {
   ENCODER_DiffState encoder_diffState = Encoder_ReceiveAnalyze();
   if (encoder_diffState == ENCODER_DIFF_NO) return;
   if (encoder_diffState == ENCODER_DIFF_CW) {
@@ -4582,7 +4575,7 @@ inline void CrealityDWINClass::Value_Control() {
   }
 }
 
-inline void CrealityDWINClass::Option_Control() {
+void CrealityDWINClass::Option_Control() {
   ENCODER_DiffState encoder_diffState = Encoder_ReceiveAnalyze();
   if (encoder_diffState == ENCODER_DIFF_NO) return;
   if (encoder_diffState == ENCODER_DIFF_CW) {
@@ -4620,7 +4613,7 @@ inline void CrealityDWINClass::Option_Control() {
   DWIN_UpdateLCD();
 }
 
-inline void CrealityDWINClass::File_Control() {
+void CrealityDWINClass::File_Control() {
   ENCODER_DiffState encoder_diffState = Encoder_ReceiveAnalyze();
   static uint8_t filescrl = 0;
   if (encoder_diffState == ENCODER_DIFF_NO) {
@@ -4705,14 +4698,13 @@ inline void CrealityDWINClass::File_Control() {
       }
       else {
         card.openAndPrintFile(card.filename);
-        Start_Print(true);
       }
     }
   }
   DWIN_UpdateLCD();
 }
 
-inline void CrealityDWINClass::Print_Screen_Control() {
+void CrealityDWINClass::Print_Screen_Control() {
   ENCODER_DiffState encoder_diffState = Encoder_ReceiveAnalyze();
   if (encoder_diffState == ENCODER_DIFF_NO) return;
   if (encoder_diffState == ENCODER_DIFF_CW && selection < 2) {
@@ -4732,11 +4724,9 @@ inline void CrealityDWINClass::Print_Screen_Control() {
       case 1:
         if (paused) {
           if (sdprint) {
-            paused = false;
             wait_for_user = false;
             #if ENABLED(PARK_HEAD_ON_PAUSE)
               card.startFileprint();
-              startOrResumeJob();
               TERN_(POWER_LOSS_RECOVERY, recovery.prepare());
             #else
               char cmnd[20];
@@ -4766,7 +4756,7 @@ inline void CrealityDWINClass::Print_Screen_Control() {
   DWIN_UpdateLCD();
 }
 
-inline void CrealityDWINClass::Popup_Control() {
+void CrealityDWINClass::Popup_Control() {
   ENCODER_DiffState encoder_diffState = Encoder_ReceiveAnalyze();
   if (encoder_diffState == ENCODER_DIFF_NO) return;
   if (encoder_diffState == ENCODER_DIFF_CW && selection < 1) {
@@ -4782,7 +4772,6 @@ inline void CrealityDWINClass::Popup_Control() {
       case Pause:
         if (selection==0) {
           if (sdprint) {
-            paused = true;
             #if ENABLED(POWER_LOSS_RECOVERY)
               if (recovery.enabled) recovery.save(true);
             #endif
@@ -4791,7 +4780,6 @@ inline void CrealityDWINClass::Popup_Control() {
               #if ENABLED(SDSUPPORT)
                 if (IS_SD_PRINTING()) card.pauseSDPrint();
               #endif
-              print_job_timer.pause();
               planner.synchronize();
               queue.inject_P(PSTR("M125"));
               planner.synchronize();
@@ -4806,7 +4794,6 @@ inline void CrealityDWINClass::Popup_Control() {
           }
           else {
             #if ENABLED(HOST_ACTION_COMMANDS)
-              paused = true;
               host_action_pause();
             #endif
           }
@@ -4816,7 +4803,7 @@ inline void CrealityDWINClass::Popup_Control() {
       case Stop:
         if (selection==0) {
           if (sdprint) {
-            ExtUI::stopPrint();
+            ui.abort_print();
             thermalManager.zero_fan_speeds();
             thermalManager.disable_all_heaters();
           }
@@ -4846,37 +4833,40 @@ inline void CrealityDWINClass::Popup_Control() {
           Draw_Menu(PreheatHotend);
         }
         else {
-          Redraw_Menu(true);
+          Redraw_Menu(true, true, false);
         }
         break;
-      case ConfFilChange:
-        if (selection==0) {
-          if (thermalManager.temp_hotend[0].target < thermalManager.extrude_min_temp) {
-            Popup_Handler(ETemp);
-          }
-          else {
-            if (thermalManager.temp_hotend[0].celsius < thermalManager.temp_hotend[0].target-2) {
-              Popup_Handler(Heating);
-              thermalManager.wait_for_hotend(0);
+      #if ENABLED(ADVANCED_PAUSE_FEATURE)
+        case ConfFilChange:
+          if (selection==0) {
+            if (thermalManager.temp_hotend[0].target < thermalManager.extrude_min_temp) {
+              Popup_Handler(ETemp);
             }
-            Popup_Handler(FilChange);
-            char buf[20];
-            sprintf(buf, "M600 B1 R%i", thermalManager.temp_hotend[0].target);
-            gcode.process_subcommands_now_P(buf);
+            else {
+              if (thermalManager.temp_hotend[0].celsius < thermalManager.temp_hotend[0].target-2) {
+                Popup_Handler(Heating);
+                thermalManager.wait_for_hotend(0);
+              }
+              Popup_Handler(FilChange);
+              char buf[20];
+              sprintf(buf, "M600 B1 R%i", thermalManager.temp_hotend[0].target);
+              gcode.process_subcommands_now_P(buf);
+            }
+          } else {
+            Redraw_Menu(true, true, false);
           }
-        } else {
-          Redraw_Menu(true);
-        }
-        break;
-      case PurgeMore:
-        if (selection==0) {
-          pause_menu_response = PAUSE_RESPONSE_EXTRUDE_MORE;
-          Popup_Handler(FilChange);
-        } else {
-          pause_menu_response = PAUSE_RESPONSE_RESUME_PRINT;
-          Redraw_Menu(true, (active_menu==PreheatHotend));
-        }
-        break;
+          break;
+        case PurgeMore:
+          if (selection==0) {
+            pause_menu_response = PAUSE_RESPONSE_EXTRUDE_MORE;
+            Popup_Handler(FilChange);
+          } else {
+            pause_menu_response = PAUSE_RESPONSE_RESUME_PRINT;
+            if (printing) Popup_Handler(Resuming);
+            else Redraw_Menu(true, true, (active_menu==PreheatHotend));
+          }
+          break;
+      #endif
       #if HAS_MESH
         case SaveLevel:
           if (selection==0) {
@@ -4895,7 +4885,7 @@ inline void CrealityDWINClass::Popup_Control() {
   DWIN_UpdateLCD();
 }
 
-inline void CrealityDWINClass::Confirm_Control() {
+void CrealityDWINClass::Confirm_Control() {
   ENCODER_DiffState encoder_diffState = Encoder_ReceiveAnalyze();
   if (encoder_diffState == ENCODER_DIFF_NO) return;
   if (encoder_diffState == ENCODER_DIFF_ENTER) {
@@ -4903,35 +4893,14 @@ inline void CrealityDWINClass::Confirm_Control() {
       case Complete:
         Draw_Main_Menu();
         break;
-      case UI:
-        switch(last_process) {
-          case Menu:
-            Redraw_Menu();
-            break;
-          case Main:
-            Draw_Main_Menu();
-            break;
-          case Print:
-            Draw_Print_Screen();
-            break;
-          case File:
-            Draw_SD_List();
-            break;
-          case Wait:
-            switch (last_popup) {
-              case Runout:
-                Draw_Print_Screen();
-                break;
-              case PIDWait:
-                Redraw_Menu();
-                break;
-              default:
-                Popup_Handler(last_popup);
-                break;
-            }
-            break;
-        }
+      case FilInsert:
+        Popup_Handler(FilChange);
         wait_for_user = false;
+        break;
+      default:
+        Redraw_Menu(true, true, false);
+        wait_for_user = false;
+        break;
     }
   }
   DWIN_UpdateLCD();
@@ -5040,6 +5009,7 @@ void CrealityDWINClass::Stop_Print() {
 }
 
 void CrealityDWINClass::Update() {
+  State_Update();
   Screen_Update();
 
   switch(process) {
@@ -5070,6 +5040,28 @@ void CrealityDWINClass::Update() {
   }
 }
 
+void CrealityDWINClass::State_Update() {
+  if ((print_job_timer.isRunning() || print_job_timer.isPaused()) != printing) {
+    if (!printing) Start_Print(card.isFileOpen());
+    else Stop_Print();
+  }
+  if (print_job_timer.isPaused() != paused) {
+    paused = print_job_timer.isPaused();
+    if (process == Print) Print_Screen_Icons();
+    if (process == Wait && !paused) Redraw_Menu(true, true);
+  }
+  if (wait_for_user && !(process == Confirm) && !print_job_timer.isPaused()) {
+    Confirm_Handler(UserInput);
+  }
+  #if ENABLED(FILAMENT_RUNOUT_SENSOR)
+    static bool ranout = false;
+    if (runout.filament_ran_out != ranout) {
+      ranout = runout.filament_ran_out;
+      if (ranout) Popup_Handler(Runout);
+    }
+  #endif
+}
+
 void CrealityDWINClass::Screen_Update() {
   static millis_t scrltime = 0;
   if (ELAPSED(millis(), scrltime)) {
@@ -5092,10 +5084,6 @@ void CrealityDWINClass::Screen_Update() {
       Draw_Print_ProgressBar();
       Draw_Print_ProgressElapsed();
       Draw_Print_ProgressRemain();
-      if (ExtUI::isPrintingPaused() != paused) {
-        paused = ExtUI::isPrintingPaused();
-        Print_Screen_Icons();
-      }
     }
   }
 
@@ -5201,23 +5189,6 @@ void CrealityDWINClass::Screen_Update() {
   }
 }
 
-void CrealityDWINClass::Startup() {
-  delay(800);
-  SERIAL_ECHOPGM("\nDWIN handshake ");
-  if (DWIN_Handshake()) SERIAL_ECHOLNPGM("ok."); else SERIAL_ECHOLNPGM("error.");
-  DWIN_Frame_SetDir(1); // Orientation 90°
-  DWIN_UpdateLCD();     // Show bootscreen (first image)
-  Encoder_Configuration();
-  for (uint16_t t = 0; t <= 100; t += 2) {
-    DWIN_ICON_Show(ICON, ICON_Bar, 15, 260);
-    DWIN_Draw_Rectangle(1, Color_Bg_Black, 15 + t * 242 / 100, 260, 257, 280);
-    DWIN_UpdateLCD();
-    delay(20);
-  }
-  DWIN_JPG_CacheTo1(Language_English);
-  Redraw_Screen();
-}
-
 void CrealityDWINClass::AudioFeedback(const bool success/*=true*/) {
   if (success) {
     buzzer.tone(100, 659);
@@ -5228,15 +5199,15 @@ void CrealityDWINClass::AudioFeedback(const bool success/*=true*/) {
     buzzer.tone(40, 440);
 }
 
-void CrealityDWINClass::SDCardInsert() { card.cdroot(); }
-
-void CrealityDWINClass::Save_Settings() {
+void CrealityDWINClass::Save_Settings(char *buff) {
   #if ENABLED(AUTO_BED_LEVELING_UBL)
     eeprom_settings.tilt_grid_size = mesh_conf.tilt_grid-1;
   #endif
+  memcpy(buff, &CrealityDWIN.eeprom_settings, min(sizeof(CrealityDWIN.eeprom_settings), eeprom_data_size));
 }
 
-void CrealityDWINClass::Load_Settings() {
+void CrealityDWINClass::Load_Settings(const char *buff) {
+  memcpy(&CrealityDWIN.eeprom_settings, buff, min(sizeof(CrealityDWIN.eeprom_settings), eeprom_data_size));
   #if ENABLED(AUTO_BED_LEVELING_UBL)
     mesh_conf.tilt_grid = eeprom_settings.tilt_grid_size+1;
   #endif

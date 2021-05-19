@@ -27,14 +27,14 @@
 
 #include "../../inc/MarlinConfigPre.h"
 
-#if ENABLED(CREALITY_DWIN_EXTUI)
+#if ENABLED(DWIN_CREALITY_LCD)
 
 #if ENABLED(ADVANCED_PAUSE_FEATURE)
   #include "../../feature/pause.h"
 #endif
 
 #include "creality_dwin.h"
-#include "../../marlinui.h"
+#include "../marlinui.h"
 
 uint8_t MarlinUI::brightness = DEFAULT_LCD_BRIGHTNESS;
 bool MarlinUI::backlight = true;
@@ -51,14 +51,47 @@ void MarlinUI::set_brightness(const uint8_t value) {
   }
 }
 
-void MarlinUI::pause_show_message(const PauseMessage message, const PauseMode mode/*=PAUSE_MODE_SAME*/, const uint8_t extruder/*=active_extruder*/) {
-  switch(message) {
-    case PAUSE_MESSAGE_OPTION:
-      CrealityDWIN.Popup_Handler(PurgeMore);
-      break;
-    default:
-      break;
+#if ENABLED(ADVANCED_PAUSE_FEATURE)
+  void MarlinUI::pause_show_message(const PauseMessage message, const PauseMode mode/*=PAUSE_MODE_SAME*/, const uint8_t extruder/*=active_extruder*/) {
+    switch(message) {
+      case PAUSE_MESSAGE_INSERT:
+        CrealityDWIN.Confirm_Handler(FilInsert);
+        break;
+      case PAUSE_MESSAGE_OPTION:
+        CrealityDWIN.Popup_Handler(PurgeMore);
+        break;
+      case PAUSE_MESSAGE_HEAT:
+        CrealityDWIN.Confirm_Handler(HeaterTime);
+        break;
+      default:
+        break;
+    }
   }
+#endif
+
+void MarlinUI::update() {
+  CrealityDWIN.Update();
+}
+
+void MarlinUI::init() {
+  delay(800);
+  SERIAL_ECHOPGM("\nDWIN handshake ");
+  if (DWIN_Handshake()) SERIAL_ECHOLNPGM("ok."); else SERIAL_ECHOLNPGM("error.");
+  DWIN_Frame_SetDir(1); // Orientation 90°
+  DWIN_UpdateLCD();     // Show bootscreen (first image)
+  Encoder_Configuration();
+  for (uint16_t t = 0; t <= 100; t += 2) {
+    DWIN_ICON_Show(ICON, ICON_Bar, 15, 260);
+    DWIN_Draw_Rectangle(1, Color_Bg_Black, 15 + t * 242 / 100, 260, 257, 280);
+    DWIN_UpdateLCD();
+    delay(20);
+  }
+  DWIN_JPG_CacheTo1(Language_English);
+  CrealityDWIN.Redraw_Screen();
+}
+
+void MarlinUI::kill_screen(PGM_P const error, PGM_P const component) {
+  CrealityDWIN.Draw_Popup((char*)"Printer Kill Reason:", error, (char*)"Restart Required", Wait, ICON_BLTouch);
 }
 
 #endif
