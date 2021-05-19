@@ -981,7 +981,7 @@
  * By default, the magnet is assumed to be on the left and activated by a home. If the magnet is
  * on the right, enable and set TOUCH_MI_DEPLOY_XPOS to the deploy position.
  *
- * Also requires: BABYSTEPPING, BABYSTEP_ZPROBE_OFFSET, Z_SAFE_HOMING,
+ * Also requires: BABYSTEPPING, BABYSTEP_ZPROBE_SET, Z_SAFE_HOMING,
  *                and a minimum Z_HOMING_HEIGHT of 10.
  */
 //#define TOUCH_MI_PROBE
@@ -1064,7 +1064,7 @@
  *     |    [-]    |
  *     O-- FRONT --+
  */
-#define NOZZLE_TO_PROBE_OFFSET { -48, -10, -1.15 }
+#define NOZZLE_TO_PROBE_OFFSET { -48, -10, -0.8 }
 
 // Most probes should stay away from the edges of the bed, but
 // with NOZZLE_AS_PROBE this can be negative for a wider probing area.
