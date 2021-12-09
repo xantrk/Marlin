@@ -20,6 +20,10 @@
  *
  */
 
+#include "../../inc/MarlinConfig.h"
+
+#if HAS_STATUS_MESSAGE
+
 #include "../gcode.h"
 #include "../../lcd/marlinui.h"
 
@@ -36,3 +40,7 @@ void GcodeSuite::M117() {
 
 }
 
+<<<<<<< HEAD
+=======
+#endif // HAS_STATUS_MESSAGE
+>>>>>>> Jyers/bugfix-JyersUI

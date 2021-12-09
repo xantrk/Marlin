@@ -21,7 +21,10 @@
  */
 #pragma once
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> Jyers/bugfix-JyersUI
 /**
  * Configuration.h
  *
@@ -36,7 +39,11 @@
  *
  * Advanced settings can be found in Configuration_adv.h
  */
+<<<<<<< HEAD
 #define CONFIGURATION_H_VERSION 020008
+=======
+#define CONFIGURATION_H_VERSION 02000903
+>>>>>>> Jyers/bugfix-JyersUI
 
 //===========================================================================
 //============================= Getting Started =============================
@@ -70,7 +77,11 @@
 // @section info
 
 // Author info of this build printed to the host during boot and M115
+<<<<<<< HEAD
 #define STRING_CONFIG_H_AUTHOR "Henri J. Norden" // Who made the changes.
+=======
+#define STRING_CONFIG_H_AUTHOR "Jacob Myers" // Who made the changes.
+>>>>>>> Jyers/bugfix-JyersUI
 //#define CUSTOM_VERSION_FILE Version.h // Path from the root directory (no quotes)
 
 /**
@@ -106,6 +117,7 @@
 #define SERIAL_PORT 1
 
 /**
+<<<<<<< HEAD
  * Select a secondary serial port on the board to use for communication with the host.
  * Currently Ethernet (-2) is only supported on Teensy 4.1 boards.
  * :[-2, -1, 0, 1, 2, 3, 4, 5, 6, 7]
@@ -114,6 +126,11 @@
 
 /**
  * This setting determines the communication speed of the printer.
+=======
+ * Serial Port Baud Rate
+ * This is the default communication speed for all serial ports.
+ * Set the baud rate defaults for additional serial ports below.
+>>>>>>> Jyers/bugfix-JyersUI
  *
  * 250000 works in most cases, but you might try a lower speed if
  * you commonly experience drop-outs during host printing.
@@ -122,6 +139,26 @@
  * :[2400, 9600, 19200, 38400, 57600, 115200, 250000, 500000, 1000000]
  */
 #define BAUDRATE 115200
+<<<<<<< HEAD
+=======
+//#define BAUD_RATE_GCODE     // Enable G-code M575 to set the baud rate
+
+/**
+ * Select a secondary serial port on the board to use for communication with the host.
+ * Currently Ethernet (-2) is only supported on Teensy 4.1 boards.
+ * :[-2, -1, 0, 1, 2, 3, 4, 5, 6, 7]
+ */
+//#define SERIAL_PORT_2 -1
+//#define BAUDRATE_2 250000   // Enable to override BAUDRATE
+
+/**
+ * Select a third serial port on the board to use for communication with the host.
+ * Currently only supported for AVR, DUE, LPC1768/9 and STM32/STM32F1
+ * :[-1, 0, 1, 2, 3, 4, 5, 6, 7]
+ */
+//#define SERIAL_PORT_3 1
+//#define BAUDRATE_3 250000   // Enable to override BAUDRATE
+>>>>>>> Jyers/bugfix-JyersUI
 
 // Enable the Bluetooth serial interface on AT90USB devices
 //#define BLUETOOTH
@@ -138,6 +175,48 @@
 // Choose your own or use a service like https://www.uuidgenerator.net/version4
 //#define MACHINE_UUID "00000000-0000-0000-0000-000000000000"
 
+<<<<<<< HEAD
+=======
+/**
+ * Define the number of coordinated linear axes.
+ * See https://github.com/DerAndere1/Marlin/wiki
+ * Each linear axis gets its own stepper control and endstop:
+ *
+ *   Steppers: *_STEP_PIN, *_ENABLE_PIN, *_DIR_PIN, *_ENABLE_ON
+ *   Endstops: *_STOP_PIN, USE_*MIN_PLUG, USE_*MAX_PLUG
+ *       Axes: *_MIN_POS, *_MAX_POS, INVERT_*_DIR
+ *    Planner: DEFAULT_AXIS_STEPS_PER_UNIT, DEFAULT_MAX_FEEDRATE
+ *             DEFAULT_MAX_ACCELERATION, AXIS_RELATIVE_MODES,
+ *             MICROSTEP_MODES, MANUAL_FEEDRATE
+ *
+ * :[3, 4, 5, 6]
+ */
+//#define LINEAR_AXES 3
+
+/**
+ * Axis codes for additional axes:
+ * This defines the axis code that is used in G-code commands to
+ * reference a specific axis.
+ * 'A' for rotational axis parallel to X
+ * 'B' for rotational axis parallel to Y
+ * 'C' for rotational axis parallel to Z
+ * 'U' for secondary linear axis parallel to X
+ * 'V' for secondary linear axis parallel to Y
+ * 'W' for secondary linear axis parallel to Z
+ * Regardless of the settings, firmware-internal axis IDs are
+ * I (AXIS4), J (AXIS5), K (AXIS6).
+ */
+#if LINEAR_AXES >= 4
+  #define AXIS4_NAME 'A' // :['A', 'B', 'C', 'U', 'V', 'W']
+#endif
+#if LINEAR_AXES >= 5
+  #define AXIS5_NAME 'B' // :['A', 'B', 'C', 'U', 'V', 'W']
+#endif
+#if LINEAR_AXES >= 6
+  #define AXIS6_NAME 'C' // :['A', 'B', 'C', 'U', 'V', 'W']
+#endif
+
+>>>>>>> Jyers/bugfix-JyersUI
 // @section extruder
 
 // This defines the number of extruders
@@ -161,11 +240,19 @@
  * Multi-Material Unit
  * Set to one of these predefined models:
  *
+<<<<<<< HEAD
  *   PRUSA_MMU1      : Průša MMU1 (The "multiplexer" version)
  *   PRUSA_MMU2      : Průša MMU2
  *   PRUSA_MMU2S     : Průša MMU2S (Requires MK3S extruder with motion sensor, EXTRUDERS = 5)
  *   SMUFF_EMU_MMU2  : Technik Gegg SMuFF (Průša MMU2 emulation mode)
  *   SMUFF_EMU_MMU2S : Technik Gegg SMuFF (Průša MMU2S emulation mode)
+=======
+ *   PRUSA_MMU1           : Průša MMU1 (The "multiplexer" version)
+ *   PRUSA_MMU2           : Průša MMU2
+ *   PRUSA_MMU2S          : Průša MMU2S (Requires MK3S extruder with motion sensor, EXTRUDERS = 5)
+ *   EXTENDABLE_EMU_MMU2  : MMU with configurable number of filaments (ERCF, SMuFF or similar with Průša MMU2 compatible firmware)
+ *   EXTENDABLE_EMU_MMU2S : MMUS with configurable number of filaments (ERCF, SMuFF or similar with Průša MMU2 compatible firmware)
+>>>>>>> Jyers/bugfix-JyersUI
  *
  * Requires NOZZLE_PARK_FEATURE to park print head in case MMU unit fails.
  * See additional options in Configuration_adv.h.
@@ -292,6 +379,10 @@
   #define MIXING_VIRTUAL_TOOLS 16  // Use the Virtual Tool method with M163 and M164
   //#define DIRECT_MIXING_IN_G1    // Allow ABCDHI mix factors in G1 movement commands
   //#define GRADIENT_MIX           // Support for gradient mixing with M166 and LCD
+<<<<<<< HEAD
+=======
+  //#define MIXING_PRESETS         // Assign 8 default V-tool presets for 2 or 3 MIXING_STEPPERS
+>>>>>>> Jyers/bugfix-JyersUI
   #if ENABLED(GRADIENT_MIX)
     //#define GRADIENT_VTOOL       // Add M166 T to use a V-tool index as a Gradient alias
   #endif
@@ -316,6 +407,12 @@
 //#define PSU_NAME "Power Supply"
 
 #if ENABLED(PSU_CONTROL)
+<<<<<<< HEAD
+=======
+  //#define MKS_PWC                 // Using the MKS PWC add-on
+  //#define PS_OFF_CONFIRM          // Confirm dialog when power off
+  //#define PS_OFF_SOUND            // Beep 1s when power off
+>>>>>>> Jyers/bugfix-JyersUI
   #define PSU_ACTIVE_STATE LOW      // Set 'LOW' for ATX, 'HIGH' for X-Box
 
   //#define PSU_DEFAULT_OFF         // Keep power off until enabled directly with M80
@@ -345,6 +442,7 @@
 // @section temperature
 
 /**
+<<<<<<< HEAD
  * --NORMAL IS 4.7kohm PULLUP!-- 1kohm pullup can be used on hotend sensor, using correct resistor and table
  *
  * Temperature sensors available:
@@ -409,6 +507,95 @@
  *         Use these for Testing or Development purposes. NEVER for production machine.
  *   998 : Dummy Table that ALWAYS reads 25°C or the temperature defined below.
  *   999 : Dummy Table that ALWAYS reads 100°C or the temperature defined below.
+=======
+ * --NORMAL IS 4.7kΩ PULLUP!-- 1kΩ pullup can be used on hotend sensor, using correct resistor and table
+ *
+ * Temperature sensors available:
+ *
+ *  SPI RTD/Thermocouple Boards - IMPORTANT: Read the NOTE below!
+ *  -------
+ *    -5 : MAX31865 with Pt100/Pt1000, 2, 3, or 4-wire  (only for sensors 0-1)
+ *                  NOTE: You must uncomment/set the MAX31865_*_OHMS_n defines below.
+ *    -3 : MAX31855 with Thermocouple, -200°C to +700°C (only for sensors 0-1)
+ *    -2 : MAX6675  with Thermocouple, 0°C to +700°C    (only for sensors 0-1)
+ *
+ *  NOTE: Ensure TEMP_n_CS_PIN is set in your pins file for each TEMP_SENSOR_n using an SPI Thermocouple. By default,
+ *        Hardware SPI on the default serial bus is used. If you have also set TEMP_n_SCK_PIN and TEMP_n_MISO_PIN,
+ *        Software SPI will be used on those ports instead. You can force Hardware SPI on the default bus in the
+ *        Configuration_adv.h file. At this time, separate Hardware SPI buses for sensors are not supported.
+ *
+ *  Analog Themocouple Boards
+ *  -------
+ *    -4 : AD8495 with Thermocouple
+ *    -1 : AD595  with Thermocouple
+ *
+ *  Analog Thermistors - 4.7kΩ pullup - Normal
+ *  -------
+ *     1 : 100kΩ  EPCOS - Best choice for EPCOS thermistors
+ *   331 : 100kΩ  Same as #1, but 3.3V scaled for MEGA
+ *   332 : 100kΩ  Same as #1, but 3.3V scaled for DUE
+ *     2 : 200kΩ  ATC Semitec 204GT-2
+ *   202 : 200kΩ  Copymaster 3D
+ *     3 : ???Ω   Mendel-parts thermistor
+ *     4 : 10kΩ   Generic Thermistor !! DO NOT use for a hotend - it gives bad resolution at high temp. !!
+ *     5 : 100kΩ  ATC Semitec 104GT-2/104NT-4-R025H42G - Used in ParCan, J-Head, and E3D, SliceEngineering 300°C
+ *   501 : 100kΩ  Zonestar - Tronxy X3A
+ *   502 : 100kΩ  Zonestar - used by hot bed in Zonestar Průša P802M
+ *   512 : 100kΩ  RPW-Ultra hotend
+ *     6 : 100kΩ  EPCOS - Not as accurate as table #1 (created using a fluke thermocouple)
+ *     7 : 100kΩ  Honeywell 135-104LAG-J01
+ *    71 : 100kΩ  Honeywell 135-104LAF-J01
+ *     8 : 100kΩ  Vishay 0603 SMD NTCS0603E3104FXT
+ *     9 : 100kΩ  GE Sensing AL03006-58.2K-97-G1
+ *    10 : 100kΩ  RS PRO 198-961
+ *    11 : 100kΩ  Keenovo AC silicone mats, most Wanhao i3 machines - beta 3950, 1%
+ *    12 : 100kΩ  Vishay 0603 SMD NTCS0603E3104FXT (#8) - calibrated for Makibox hot bed
+ *    13 : 100kΩ  Hisens up to 300°C - for "Simple ONE" & "All In ONE" hotend - beta 3950, 1%
+ *    15 : 100kΩ  Calibrated for JGAurora A5 hotend
+ *    18 : 200kΩ  ATC Semitec 204GT-2 Dagoma.Fr - MKS_Base_DKU001327
+ *    22 : 100kΩ  GTM32 Pro vB - hotend - 4.7kΩ pullup to 3.3V and 220Ω to analog input
+ *    23 : 100kΩ  GTM32 Pro vB - bed - 4.7kΩ pullup to 3.3v and 220Ω to analog input
+ *    30 : 100kΩ  Kis3d Silicone heating mat 200W/300W with 6mm precision cast plate (EN AW 5083) NTC100K - beta 3950
+ *    60 : 100kΩ  Maker's Tool Works Kapton Bed Thermistor - beta 3950
+ *    61 : 100kΩ  Formbot/Vivedino 350°C Thermistor - beta 3950
+ *    66 : 4.7MΩ  Dyze Design High Temperature Thermistor
+ *    67 : 500kΩ  SliceEngineering 450°C Thermistor
+ *    70 : 100kΩ  bq Hephestos 2
+ *    75 : 100kΩ  Generic Silicon Heat Pad with NTC100K MGB18-104F39050L32
+ *  2000 : 100kΩ  Ultimachine Rambo TDK NTCG104LH104KT1 NTC100K motherboard Thermistor
+ *
+ *  Analog Thermistors - 1kΩ pullup - Atypical, and requires changing out the 4.7kΩ pullup for 1kΩ.
+ *  -------                           (but gives greater accuracy and more stable PID)
+ *    51 : 100kΩ  EPCOS (1kΩ pullup)
+ *    52 : 200kΩ  ATC Semitec 204GT-2 (1kΩ pullup)
+ *    55 : 100kΩ  ATC Semitec 104GT-2 - Used in ParCan & J-Head (1kΩ pullup)
+ *
+ *  Analog Thermistors - 10kΩ pullup - Atypical
+ *  -------
+ *    99 : 100kΩ  Found on some Wanhao i3 machines with a 10kΩ pull-up resistor
+ *
+ *  Analog RTDs (Pt100/Pt1000)
+ *  -------
+ *   110 : Pt100  with 1kΩ pullup (atypical)
+ *   147 : Pt100  with 4.7kΩ pullup
+ *  1010 : Pt1000 with 1kΩ pullup (atypical)
+ *  1047 : Pt1000 with 4.7kΩ pullup (E3D)
+ *    20 : Pt100  with circuit in the Ultimainboard V2.x with mainboard ADC reference voltage = INA826 amplifier-board supply voltage.
+ *                NOTE: (1) Must use an ADC input with no pullup. (2) Some INA826 amplifiers are unreliable at 3.3V so consider using sensor 147, 110, or 21.
+ *    21 : Pt100  with circuit in the Ultimainboard V2.x with 3.3v ADC reference voltage (STM32, LPC176x....) and 5V INA826 amplifier board supply.
+ *                NOTE: ADC pins are not 5V tolerant. Not recommended because it's possible to damage the CPU by going over 500°C.
+ *   201 : Pt100  with circuit in Overlord, similar to Ultimainboard V2.x
+ *
+ *  Custom/Dummy/Other Thermal Sensors
+ *  ------
+ *     0 : not used
+ *  1000 : Custom - Specify parameters in Configuration_adv.h
+ *
+ *   !!! Use these for Testing or Development purposes. NEVER for production machine. !!!
+ *   998 : Dummy Table that ALWAYS reads 25°C or the temperature defined below.
+ *   999 : Dummy Table that ALWAYS reads 100°C or the temperature defined below.
+ *
+>>>>>>> Jyers/bugfix-JyersUI
  */
 #define TEMP_SENSOR_0 1
 #define TEMP_SENSOR_1 0
@@ -422,13 +609,22 @@
 #define TEMP_SENSOR_PROBE 0
 #define TEMP_SENSOR_CHAMBER 0
 #define TEMP_SENSOR_COOLER 0
+<<<<<<< HEAD
 
 // Dummy thermistor constant temperature readings, for use with 998 and 999
 #define DUMMY_THERMISTOR_998_VALUE 25
+=======
+#define TEMP_SENSOR_BOARD 0
+#define TEMP_SENSOR_REDUNDANT 0
+
+// Dummy thermistor constant temperature readings, for use with 998 and 999
+#define DUMMY_THERMISTOR_998_VALUE  25
+>>>>>>> Jyers/bugfix-JyersUI
 #define DUMMY_THERMISTOR_999_VALUE 100
 
 // Resistor values when using MAX31865 sensors (-5) on TEMP_SENSOR_0 / 1
 //#define MAX31865_SENSOR_OHMS_0      100   // (Ω) Typically 100 or 1000 (PT100 or PT1000)
+<<<<<<< HEAD
 //#define MAX31865_CALIBRATION_OHMS_0 430   // (Ω) Typically 430 for AdaFruit PT100; 4300 for AdaFruit PT1000
 //#define MAX31865_SENSOR_OHMS_1      100
 //#define MAX31865_CALIBRATION_OHMS_1 430
@@ -449,6 +645,39 @@
 #define TEMP_CHAMBER_RESIDENCY_TIME 10  // (seconds) Time to wait for chamber to "settle" in M191
 #define TEMP_CHAMBER_WINDOW      1  // (°C) Temperature proximity for the "temperature reached" timer
 #define TEMP_CHAMBER_HYSTERESIS  3  // (°C) Temperature proximity considered "close enough" to the target
+=======
+//#define MAX31865_CALIBRATION_OHMS_0 430   // (Ω) Typically 430 for Adafruit PT100; 4300 for Adafruit PT1000
+//#define MAX31865_SENSOR_OHMS_1      100
+//#define MAX31865_CALIBRATION_OHMS_1 430
+
+#define TEMP_RESIDENCY_TIME         10  // (seconds) Time to wait for hotend to "settle" in M109
+#define TEMP_WINDOW                  1  // (°C) Temperature proximity for the "temperature reached" timer
+#define TEMP_HYSTERESIS              3  // (°C) Temperature proximity considered "close enough" to the target
+
+#define TEMP_BED_RESIDENCY_TIME     10  // (seconds) Time to wait for bed to "settle" in M190
+#define TEMP_BED_WINDOW              1  // (°C) Temperature proximity for the "temperature reached" timer
+#define TEMP_BED_HYSTERESIS          3  // (°C) Temperature proximity considered "close enough" to the target
+
+#define TEMP_CHAMBER_RESIDENCY_TIME 10  // (seconds) Time to wait for chamber to "settle" in M191
+#define TEMP_CHAMBER_WINDOW          1  // (°C) Temperature proximity for the "temperature reached" timer
+#define TEMP_CHAMBER_HYSTERESIS      3  // (°C) Temperature proximity considered "close enough" to the target
+
+/**
+ * Redundant Temperature Sensor (TEMP_SENSOR_REDUNDANT)
+ *
+ * Use a temp sensor as a redundant sensor for another reading. Select an unused temperature sensor, and another
+ * sensor you'd like it to be redundant for. If the two thermistors differ by TEMP_SENSOR_REDUNDANT_MAX_DIFF (°C),
+ * the print will be aborted. Whichever sensor is selected will have its normal functions disabled; i.e. selecting
+ * the Bed sensor (-1) will disable bed heating/monitoring.
+ *
+ * For selecting source/target use: COOLER, PROBE, BOARD, CHAMBER, BED, E0, E1, E2, E3, E4, E5, E6, E7
+ */
+#if TEMP_SENSOR_REDUNDANT
+  #define TEMP_SENSOR_REDUNDANT_SOURCE    E1  // The sensor that will provide the redundant reading.
+  #define TEMP_SENSOR_REDUNDANT_TARGET    E0  // The sensor that we are providing a redundant reading for.
+  #define TEMP_SENSOR_REDUNDANT_MAX_DIFF  10  // (°C) Temperature difference that will trigger a print abort.
+#endif
+>>>>>>> Jyers/bugfix-JyersUI
 
 // Below this temperature the heater will be switched off
 // because it probably indicates a broken thermistor wire.
@@ -460,7 +689,11 @@
 #define HEATER_5_MINTEMP   5
 #define HEATER_6_MINTEMP   5
 #define HEATER_7_MINTEMP   5
+<<<<<<< HEAD
 #define BED_MINTEMP        5
+=======
+#define BED_MINTEMP        0
+>>>>>>> Jyers/bugfix-JyersUI
 #define CHAMBER_MINTEMP    5
 
 // Above this temperature the heater will be switched off.
@@ -505,8 +738,13 @@
                                   // Set/get with gcode: M301 E[extruder number, 0-2]
 
   #if ENABLED(PID_PARAMS_PER_HOTEND)
+<<<<<<< HEAD
     // Specify between 1 and HOTENDS values per array.
     // If fewer than EXTRUDER values are provided, the last element will be repeated.
+=======
+    // Specify up to one value per hotend here, according to your setup.
+    // If there are fewer values, the last one applies to the remaining hotends.
+>>>>>>> Jyers/bugfix-JyersUI
     #define DEFAULT_Kp_LIST {  28.72,  28.72 }
     #define DEFAULT_Ki_LIST {   2.62,   2.62 }
     #define DEFAULT_Kd_LIST {  78.81,  78.81 }
@@ -650,7 +888,11 @@
 #define THERMAL_PROTECTION_HOTENDS // Enable thermal protection for all extruders
 #define THERMAL_PROTECTION_BED     // Enable thermal protection for the heated bed
 //#define THERMAL_PROTECTION_CHAMBER // Enable thermal protection for the heated chamber
+<<<<<<< HEAD
 //#define THERMAL_PROTECTION_COOLER  // Enable thermal protection for the laser cooling
+=======
+#define THERMAL_PROTECTION_COOLER  // Enable thermal protection for the laser cooling
+>>>>>>> Jyers/bugfix-JyersUI
 
 //===========================================================================
 //============================= Mechanical Settings =========================
@@ -668,6 +910,19 @@
 //#define COREZY
 //#define MARKFORGED_XY  // MarkForged. See https://reprap.org/forum/read.php?152,504042
 
+<<<<<<< HEAD
+=======
+// Enable for a belt style printer with endless "Z" motion
+//#define BELTPRINTER
+
+// Enable for Polargraph Kinematics
+//#define POLARGRAPH
+#if ENABLED(POLARGRAPH)
+  #define POLARGRAPH_MAX_BELT_LEN 1035.0
+  #define POLAR_SEGMENTS_PER_SECOND 5
+#endif
+
+>>>>>>> Jyers/bugfix-JyersUI
 //===========================================================================
 //============================== Endstop Settings ===========================
 //===========================================================================
@@ -680,20 +935,47 @@
 #define USE_XMIN_PLUG
 #define USE_YMIN_PLUG
 #define USE_ZMIN_PLUG
+<<<<<<< HEAD
 //#define USE_XMAX_PLUG
 //#define USE_YMAX_PLUG
 //#define USE_ZMAX_PLUG
+=======
+//#define USE_IMIN_PLUG
+//#define USE_JMIN_PLUG
+//#define USE_KMIN_PLUG
+//#define USE_XMAX_PLUG
+//#define USE_YMAX_PLUG
+//#define USE_ZMAX_PLUG
+//#define USE_IMAX_PLUG
+//#define USE_JMAX_PLUG
+//#define USE_KMAX_PLUG
+>>>>>>> Jyers/bugfix-JyersUI
 
 // Enable pullup for all endstops to prevent a floating state
 #define ENDSTOPPULLUPS
 #if DISABLED(ENDSTOPPULLUPS)
   // Disable ENDSTOPPULLUPS to set pullups individually
+<<<<<<< HEAD
   //#define ENDSTOPPULLUP_XMAX
   //#define ENDSTOPPULLUP_YMAX
   //#define ENDSTOPPULLUP_ZMAX
   //#define ENDSTOPPULLUP_XMIN
   //#define ENDSTOPPULLUP_YMIN
   //#define ENDSTOPPULLUP_ZMIN
+=======
+  //#define ENDSTOPPULLUP_XMIN
+  //#define ENDSTOPPULLUP_YMIN
+  //#define ENDSTOPPULLUP_ZMIN
+  //#define ENDSTOPPULLUP_IMIN
+  //#define ENDSTOPPULLUP_JMIN
+  //#define ENDSTOPPULLUP_KMIN
+  //#define ENDSTOPPULLUP_XMAX
+  //#define ENDSTOPPULLUP_YMAX
+  //#define ENDSTOPPULLUP_ZMAX
+  //#define ENDSTOPPULLUP_IMAX
+  //#define ENDSTOPPULLUP_JMAX
+  //#define ENDSTOPPULLUP_KMAX
+>>>>>>> Jyers/bugfix-JyersUI
   //#define ENDSTOPPULLUP_ZMIN_PROBE
 #endif
 
@@ -701,12 +983,27 @@
 //#define ENDSTOPPULLDOWNS
 #if DISABLED(ENDSTOPPULLDOWNS)
   // Disable ENDSTOPPULLDOWNS to set pulldowns individually
+<<<<<<< HEAD
   //#define ENDSTOPPULLDOWN_XMAX
   //#define ENDSTOPPULLDOWN_YMAX
   //#define ENDSTOPPULLDOWN_ZMAX
   //#define ENDSTOPPULLDOWN_XMIN
   //#define ENDSTOPPULLDOWN_YMIN
   //#define ENDSTOPPULLDOWN_ZMIN
+=======
+  //#define ENDSTOPPULLDOWN_XMIN
+  //#define ENDSTOPPULLDOWN_YMIN
+  //#define ENDSTOPPULLDOWN_ZMIN
+  //#define ENDSTOPPULLDOWN_IMIN
+  //#define ENDSTOPPULLDOWN_JMIN
+  //#define ENDSTOPPULLDOWN_KMIN
+  //#define ENDSTOPPULLDOWN_XMAX
+  //#define ENDSTOPPULLDOWN_YMAX
+  //#define ENDSTOPPULLDOWN_ZMAX
+  //#define ENDSTOPPULLDOWN_IMAX
+  //#define ENDSTOPPULLDOWN_JMAX
+  //#define ENDSTOPPULLDOWN_KMAX
+>>>>>>> Jyers/bugfix-JyersUI
   //#define ENDSTOPPULLDOWN_ZMIN_PROBE
 #endif
 
@@ -714,9 +1011,21 @@
 #define X_MIN_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
 #define Y_MIN_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
 #define Z_MIN_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
+<<<<<<< HEAD
 #define X_MAX_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
 #define Y_MAX_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
 #define Z_MAX_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
+=======
+#define I_MIN_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
+#define J_MIN_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
+#define K_MIN_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
+#define X_MAX_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
+#define Y_MAX_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
+#define Z_MAX_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
+#define I_MAX_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
+#define J_MAX_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
+#define K_MAX_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
+>>>>>>> Jyers/bugfix-JyersUI
 #define Z_MIN_PROBE_ENDSTOP_INVERTING false // Set to true to invert the logic of the probe.
 
 /**
@@ -745,6 +1054,12 @@
 //#define Z2_DRIVER_TYPE A4988
 //#define Z3_DRIVER_TYPE A4988
 //#define Z4_DRIVER_TYPE A4988
+<<<<<<< HEAD
+=======
+//#define I_DRIVER_TYPE  A4988
+//#define J_DRIVER_TYPE  A4988
+//#define K_DRIVER_TYPE  A4988
+>>>>>>> Jyers/bugfix-JyersUI
 #define E0_DRIVER_TYPE TMC2208_STANDALONE
 //#define E1_DRIVER_TYPE A4988
 //#define E2_DRIVER_TYPE A4988
@@ -798,14 +1113,22 @@
 /**
  * Default Axis Steps Per Unit (steps/mm)
  * Override with M92
+<<<<<<< HEAD
  *                                      X, Y, Z, E0 [, E1[, E2...]]
+=======
+ *                                      X, Y, Z [, I [, J [, K]]], E0 [, E1[, E2...]]
+>>>>>>> Jyers/bugfix-JyersUI
  */
 #define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 400, 93 }
 
 /**
  * Default Max Feed Rate (mm/s)
  * Override with M203
+<<<<<<< HEAD
  *                                      X, Y, Z, E0 [, E1[, E2...]]
+=======
+ *                                      X, Y, Z [, I [, J [, K]]], E0 [, E1[, E2...]]
+>>>>>>> Jyers/bugfix-JyersUI
  */
 #define DEFAULT_MAX_FEEDRATE          { 500, 500, 5, 25 }
 
@@ -818,7 +1141,11 @@
  * Default Max Acceleration (change/s) change = mm/s
  * (Maximum start speed for accelerated moves)
  * Override with M201
+<<<<<<< HEAD
  *                                      X, Y, Z, E0 [, E1[, E2...]]
+=======
+ *                                      X, Y, Z [, I [, J [, K]]], E0 [, E1[, E2...]]
+>>>>>>> Jyers/bugfix-JyersUI
  */
 #define DEFAULT_MAX_ACCELERATION      { 500, 500, 100, 1000 }
 
@@ -852,6 +1179,12 @@
   #define DEFAULT_XJERK 10.0
   #define DEFAULT_YJERK 10.0
   #define DEFAULT_ZJERK  0.3
+<<<<<<< HEAD
+=======
+  //#define DEFAULT_IJERK  0.3
+  //#define DEFAULT_JJERK  0.3
+  //#define DEFAULT_KJERK  0.3
+>>>>>>> Jyers/bugfix-JyersUI
 
   //#define TRAVEL_EXTRA_XYJERK 0.0     // Additional jerk allowance for all travel moves
 
@@ -900,7 +1233,11 @@
  * The probe replaces the Z-MIN endstop and is used for Z homing.
  * (Automatically enables USE_PROBE_FOR_Z_HOMING.)
  */
+<<<<<<< HEAD
 //#define Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN
+=======
+#define Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN
+>>>>>>> Jyers/bugfix-JyersUI
 
 // Force the use of the probe for Z-axis homing
 //#define USE_PROBE_FOR_Z_HOMING
@@ -935,7 +1272,10 @@
  * or (with LCD_BED_LEVELING) the LCD controller.
  */
 //#define PROBE_MANUALLY
+<<<<<<< HEAD
 //#define MANUAL_PROBE_START_Z 0.2
+=======
+>>>>>>> Jyers/bugfix-JyersUI
 
 /**
  * A Fix-Mounted Probe either doesn't deploy or needs manual deployment.
@@ -944,12 +1284,15 @@
 //#define FIX_MOUNTED_PROBE
 
 /**
+<<<<<<< HEAD
  * Use the nozzle as the probe, with the hotend
  * assembly attached to a sensitive strain gauge.
  */
 //#define STRAIN_GAUGE_PROBE
 
 /**
+=======
+>>>>>>> Jyers/bugfix-JyersUI
  * Use the nozzle as the probe, as with a conductive
  * nozzle system or a piezo-electric smart effector.
  */
@@ -998,7 +1341,11 @@
 #endif
 
 // Duet Smart Effector (for delta printers) - https://bit.ly/2ul5U7J
+<<<<<<< HEAD
 // When the pin is defined you can use M672 to set/reset the probe sensivity.
+=======
+// When the pin is defined you can use M672 to set/reset the probe sensitivity.
+>>>>>>> Jyers/bugfix-JyersUI
 //#define DUET_SMART_EFFECTOR
 #if ENABLED(DUET_SMART_EFFECTOR)
   #define SMART_EFFECTOR_MOD_PIN  -1  // Connect a GPIO pin to the Smart Effector MOD pin
@@ -1107,7 +1454,11 @@
  * A total of 2 does fast/slow probes with a weighted average.
  * A total of 3 or more adds more slow probes, taking the average.
  */
+<<<<<<< HEAD
 #define MULTIPLE_PROBING 2
+=======
+//#define MULTIPLE_PROBING 2
+>>>>>>> Jyers/bugfix-JyersUI
 //#define EXTRA_PROBING    1
 
 /**
@@ -1157,7 +1508,12 @@
   //#define WAIT_FOR_HOTEND         // Wait for hotend to heat back up between probes (to improve accuracy & prevent cold extrude)
 #endif
 //#define PROBING_FANS_OFF          // Turn fans off when probing
+<<<<<<< HEAD
 //#define PROBING_STEPPERS_OFF      // Turn steppers off (unless needed to hold position) when probing
+=======
+//#define PROBING_ESTEPPERS_OFF     // Turn all extruder steppers off when probing
+//#define PROBING_STEPPERS_OFF      // Turn all steppers off (unless needed to hold position) when probing (including extruders)
+>>>>>>> Jyers/bugfix-JyersUI
 //#define DELAY_BEFORE_PROBING 200  // (ms) To prevent vibrations from triggering piezo sensors
 
 // Require minimum nozzle and/or bed temperature for probing
@@ -1173,12 +1529,24 @@
 #define Y_ENABLE_ON 0
 #define Z_ENABLE_ON 0
 #define E_ENABLE_ON 0 // For all extruders
+<<<<<<< HEAD
+=======
+//#define I_ENABLE_ON 0
+//#define J_ENABLE_ON 0
+//#define K_ENABLE_ON 0
+>>>>>>> Jyers/bugfix-JyersUI
 
 // Disable axis steppers immediately when they're not being stepped.
 // WARNING: When motors turn off there is a chance of losing position accuracy!
 #define DISABLE_X false
 #define DISABLE_Y false
 #define DISABLE_Z false
+<<<<<<< HEAD
+=======
+//#define DISABLE_I false
+//#define DISABLE_J false
+//#define DISABLE_K false
+>>>>>>> Jyers/bugfix-JyersUI
 
 // Turn off the display blinking that warns about possible accuracy reduction
 //#define DISABLE_REDUCED_ACCURACY_WARNING
@@ -1194,6 +1562,12 @@
 #define INVERT_X_DIR false
 #define INVERT_Y_DIR false
 #define INVERT_Z_DIR true
+<<<<<<< HEAD
+=======
+//#define INVERT_I_DIR false
+//#define INVERT_J_DIR false
+//#define INVERT_K_DIR false
+>>>>>>> Jyers/bugfix-JyersUI
 
 // @section extruder
 
@@ -1229,10 +1603,20 @@
 #define X_HOME_DIR -1
 #define Y_HOME_DIR -1
 #define Z_HOME_DIR -1
+<<<<<<< HEAD
 
 // @section machine
 
 // The size of the print bed
+=======
+//#define I_HOME_DIR -1
+//#define J_HOME_DIR -1
+//#define K_HOME_DIR -1
+
+// @section machine
+
+// The size of the printable area
+>>>>>>> Jyers/bugfix-JyersUI
 #define X_BED_SIZE 230
 #define Y_BED_SIZE 230
 
@@ -1243,6 +1627,15 @@
 #define X_MAX_POS X_BED_SIZE
 #define Y_MAX_POS Y_BED_SIZE
 #define Z_MAX_POS 250
+<<<<<<< HEAD
+=======
+//#define I_MIN_POS 0
+//#define I_MAX_POS 50
+//#define J_MIN_POS 0
+//#define J_MAX_POS 50
+//#define K_MIN_POS 0
+//#define K_MAX_POS 50
+>>>>>>> Jyers/bugfix-JyersUI
 
 /**
  * Software Endstops
@@ -1259,6 +1652,12 @@
   #define MIN_SOFTWARE_ENDSTOP_X
   #define MIN_SOFTWARE_ENDSTOP_Y
   #define MIN_SOFTWARE_ENDSTOP_Z
+<<<<<<< HEAD
+=======
+  #define MIN_SOFTWARE_ENDSTOP_I
+  #define MIN_SOFTWARE_ENDSTOP_J
+  #define MIN_SOFTWARE_ENDSTOP_K
+>>>>>>> Jyers/bugfix-JyersUI
 #endif
 
 // Max software endstops constrain movement within maximum coordinate bounds
@@ -1267,6 +1666,12 @@
   #define MAX_SOFTWARE_ENDSTOP_X
   #define MAX_SOFTWARE_ENDSTOP_Y
   #define MAX_SOFTWARE_ENDSTOP_Z
+<<<<<<< HEAD
+=======
+  #define MAX_SOFTWARE_ENDSTOP_I
+  #define MAX_SOFTWARE_ENDSTOP_J
+  #define MAX_SOFTWARE_ENDSTOP_K
+>>>>>>> Jyers/bugfix-JyersUI
 #endif
 
 #if EITHER(MIN_SOFTWARE_ENDSTOPS, MAX_SOFTWARE_ENDSTOPS)
@@ -1416,6 +1821,14 @@
  */
 //#define DEBUG_LEVELING_FEATURE
 
+<<<<<<< HEAD
+=======
+#if ANY(MESH_BED_LEVELING, AUTO_BED_LEVELING_UBL, PROBE_MANUALLY)
+  // Set a height for the start of manual adjustment
+  #define MANUAL_PROBE_START_Z 0.2  // (mm) Comment out to use the last-measured height
+#endif
+
+>>>>>>> Jyers/bugfix-JyersUI
 #if ANY(MESH_BED_LEVELING, AUTO_BED_LEVELING_BILINEAR, AUTO_BED_LEVELING_UBL)
   // Gradually reduce leveling correction until a set height is reached,
   // at which point movement will be level to the machine's XY plane.
@@ -1434,6 +1847,7 @@
   /**
    * Enable the G26 Mesh Validation Pattern tool.
    */
+<<<<<<< HEAD
   #define G26_MESH_VALIDATION
   #if ENABLED(G26_MESH_VALIDATION)
     #define MESH_TEST_NOZZLE_SIZE    0.4  // (mm) Diameter of primary nozzle.
@@ -1441,6 +1855,16 @@
     #define MESH_TEST_HOTEND_TEMP  205    // (°C) Default nozzle temperature for the G26 Mesh Validation Tool.
     #define MESH_TEST_BED_TEMP      60    // (°C) Default bed temperature for the G26 Mesh Validation Tool.
     #define G26_XY_FEEDRATE         20    // (mm/s) Feedrate for XY Moves for the G26 Mesh Validation Tool.
+=======
+  //#define G26_MESH_VALIDATION
+  #if ENABLED(G26_MESH_VALIDATION)
+    #define MESH_TEST_NOZZLE_SIZE    0.4  // (mm) Diameter of primary nozzle.
+    #define MESH_TEST_LAYER_HEIGHT   0.2  // (mm) Default layer height for G26.
+    #define MESH_TEST_HOTEND_TEMP  205    // (°C) Default nozzle temperature for G26.
+    #define MESH_TEST_BED_TEMP      60    // (°C) Default bed temperature for G26.
+    #define G26_XY_FEEDRATE         20    // (mm/s) Feedrate for G26 XY moves.
+    #define G26_XY_FEEDRATE_TRAVEL 100    // (mm/s) Feedrate for G26 XY travel moves.
+>>>>>>> Jyers/bugfix-JyersUI
     #define G26_RETRACT_MULTIPLIER   1.0  // G26 Q (retraction) used by default between mesh test elements.
   #endif
 
@@ -1493,6 +1917,11 @@
   //#define UBL_Z_RAISE_WHEN_OFF_MESH 2.5 // When the nozzle is off the mesh, this value is used
                                           // as the Z-Height correction value.
 
+<<<<<<< HEAD
+=======
+  //#define UBL_MESH_WIZARD         // Run several commands in a row to get a complete mesh
+
+>>>>>>> Jyers/bugfix-JyersUI
 #elif ENABLED(MESH_BED_LEVELING)
 
   //===========================================================================
@@ -1533,6 +1962,28 @@
     #define LEVEL_CORNERS_VERIFY_RAISED   // After adjustment triggers the probe, re-probe to verify
     //#define LEVEL_CORNERS_AUDIO_FEEDBACK
   #endif
+<<<<<<< HEAD
+=======
+
+  /**
+   * Corner Leveling Order
+   *
+   * Set 2 or 4 points. When 2 points are given, the 3rd is the center of the opposite edge.
+   *
+   *  LF  Left-Front    RF  Right-Front
+   *  LB  Left-Back     RB  Right-Back
+   *
+   * Examples:
+   *
+   *      Default        {LF,RB,LB,RF}         {LF,RF}           {LB,LF}
+   *  LB --------- RB   LB --------- RB    LB --------- RB   LB --------- RB
+   *  |  4       3  |   | 3         2 |    |     <3>     |   | 1           |
+   *  |             |   |             |    |             |   |          <3>|
+   *  |  1       2  |   | 1         4 |    | 1         2 |   | 2           |
+   *  LF --------- RF   LF --------- RF    LF --------- RF   LF --------- RF
+   */
+  #define LEVEL_CORNERS_LEVELING_ORDER { LF, RF, RB, LB }
+>>>>>>> Jyers/bugfix-JyersUI
 #endif
 
 /**
@@ -1551,6 +2002,7 @@
 //#define MANUAL_X_HOME_POS 0
 //#define MANUAL_Y_HOME_POS 0
 //#define MANUAL_Z_HOME_POS 0
+<<<<<<< HEAD
 
 // Use "Z Safe Homing" to avoid homing with a Z probe outside the bed area.
 //
@@ -1561,6 +2013,19 @@
 // - Move the Z probe (or nozzle) to a defined XY point before Z Homing.
 // - Prevent Z homing when the Z probe is outside bed area.
 //
+=======
+//#define MANUAL_I_HOME_POS 0
+//#define MANUAL_J_HOME_POS 0
+//#define MANUAL_K_HOME_POS 0
+
+/**
+ * Use "Z Safe Homing" to avoid homing with a Z probe outside the bed area.
+ *
+ * - Moves the Z probe (or nozzle) to a defined XY point before Z homing.
+ * - Allows Z homing only when XY positions are known and trusted.
+ * - If stepper drivers sleep, XY homing may be required again before Z homing.
+ */
+>>>>>>> Jyers/bugfix-JyersUI
 //#define Z_SAFE_HOMING
 
 #if ENABLED(Z_SAFE_HOMING)
@@ -1676,7 +2141,13 @@
 
 // @section temperature
 
+<<<<<<< HEAD
 // Preheat Constants
+=======
+//
+// Preheat Constants - Up to 5 are supported without changes
+//
+>>>>>>> Jyers/bugfix-JyersUI
 #define PREHEAT_1_LABEL       "Warmup"
 #define PREHEAT_1_TEMP_HOTEND 150
 #define PREHEAT_1_TEMP_BED     45
@@ -1804,11 +2275,28 @@
 /**
  * Print Job Timer
  *
+<<<<<<< HEAD
  * Automatically start and stop the print job timer on M104/M109/M190.
  *
  *   M104 (hotend, no wait) - high temp = none,        low temp = stop timer
  *   M109 (hotend, wait)    - high temp = start timer, low temp = stop timer
  *   M190 (bed, wait)       - high temp = start timer, low temp = none
+=======
+ * Automatically start and stop the print job timer on M104/M109/M140/M190/M141/M191.
+ * The print job timer will only be stopped if the bed/chamber target temp is
+ * below BED_MINTEMP/CHAMBER_MINTEMP.
+ *
+ *   M104 (hotend, no wait)  - high temp = none,        low temp = stop timer
+ *   M109 (hotend, wait)     - high temp = start timer, low temp = stop timer
+ *   M140 (bed, no wait)     - high temp = none,        low temp = stop timer
+ *   M190 (bed, wait)        - high temp = start timer, low temp = none
+ *   M141 (chamber, no wait) - high temp = none,        low temp = stop timer
+ *   M191 (chamber, wait)    - high temp = start timer, low temp = none
+ *
+ * For M104/M109, high temp is anything over EXTRUDE_MINTEMP / 2.
+ * For M140/M190, high temp is anything over BED_MINTEMP.
+ * For M141/M191, high temp is anything over CHAMBER_MINTEMP.
+>>>>>>> Jyers/bugfix-JyersUI
  *
  * The timer can also be controlled with the following commands:
  *
@@ -1831,6 +2319,12 @@
  * View the current statistics with M78.
  */
 #define PRINTCOUNTER
+<<<<<<< HEAD
+=======
+#if ENABLED(PRINTCOUNTER)
+  #define PRINTCOUNTER_SAVE_INTERVAL 60 // (minutes) EEPROM save interval during print
+#endif
+>>>>>>> Jyers/bugfix-JyersUI
 
 /**
  * Password
@@ -1874,10 +2368,17 @@
  *
  * Select the language to display on the LCD. These languages are available:
  *
+<<<<<<< HEAD
  *   en, an, bg, ca, cz, da, de, el, el_gr, es, eu, fi, fr, gl, hr, hu, it,
  *   jp_kana, ko_KR, nl, pl, pt, pt_br, ro, ru, sk, tr, uk, vi, zh_CN, zh_TW, test
  *
  * :{ 'en':'English', 'an':'Aragonese', 'bg':'Bulgarian', 'ca':'Catalan', 'cz':'Czech', 'da':'Danish', 'de':'German', 'el':'Greek', 'el_gr':'Greek (Greece)', 'es':'Spanish', 'eu':'Basque-Euskera', 'fi':'Finnish', 'fr':'French', 'gl':'Galician', 'hr':'Croatian', 'hu':'Hungarian', 'it':'Italian', 'jp_kana':'Japanese', 'ko_KR':'Korean (South Korea)', 'nl':'Dutch', 'pl':'Polish', 'pt':'Portuguese', 'pt_br':'Portuguese (Brazilian)', 'ro':'Romanian', 'ru':'Russian', 'sk':'Slovak', 'tr':'Turkish', 'uk':'Ukrainian', 'vi':'Vietnamese', 'zh_CN':'Chinese (Simplified)', 'zh_TW':'Chinese (Traditional)', 'test':'TEST' }
+=======
+ *   en, an, bg, ca, cz, da, de, el, el_CY, es, eu, fi, fr, gl, hr, hu, it,
+ *   jp_kana, ko_KR, nl, pl, pt, pt_br, ro, ru, sk, sv, tr, uk, vi, zh_CN, zh_TW
+ *
+ * :{ 'en':'English', 'an':'Aragonese', 'bg':'Bulgarian', 'ca':'Catalan', 'cz':'Czech', 'da':'Danish', 'de':'German', 'el':'Greek (Greece)', 'el_CY':'Greek (Cyprus)', 'es':'Spanish', 'eu':'Basque-Euskera', 'fi':'Finnish', 'fr':'French', 'gl':'Galician', 'hr':'Croatian', 'hu':'Hungarian', 'it':'Italian', 'jp_kana':'Japanese', 'ko_KR':'Korean (South Korea)', 'nl':'Dutch', 'pl':'Polish', 'pt':'Portuguese', 'pt_br':'Portuguese (Brazilian)', 'ro':'Romanian', 'ru':'Russian', 'sk':'Slovak', 'sv':'Swedish', 'tr':'Turkish', 'uk':'Ukrainian', 'vi':'Vietnamese', 'zh_CN':'Chinese (Simplified)', 'zh_TW':'Chinese (Traditional)' }
+>>>>>>> Jyers/bugfix-JyersUI
  */
 #define LCD_LANGUAGE en
 
@@ -1989,6 +2490,10 @@
 // Add individual axis homing items (Home X, Home Y, and Home Z) to the LCD menu.
 //
 //#define INDIVIDUAL_AXIS_HOMING_MENU
+<<<<<<< HEAD
+=======
+//#define INDIVIDUAL_AXIS_HOMING_SUBMENU
+>>>>>>> Jyers/bugfix-JyersUI
 
 //
 // SPEAKER/BUZZER
@@ -2199,6 +2704,14 @@
 //#define miniVIKI
 
 //
+<<<<<<< HEAD
+=======
+// Alfawise Ex8 printer LCD marked as WYH L12864 COG
+//
+//#define WYH_L12864
+
+//
+>>>>>>> Jyers/bugfix-JyersUI
 // MakerLab Mini Panel with graphic
 // controller and SD support - https://reprap.org/wiki/Mini_panel
 //
@@ -2246,10 +2759,23 @@
 //#define MKS_MINI_12864
 
 //
+<<<<<<< HEAD
 // MKS LCD12864A/B with graphic controller and SD support. Follows MKS_MINI_12864 pinout.
 // https://www.aliexpress.com/item/33018110072.html
 //
 //#define MKS_LCD12864
+=======
+// MKS MINI12864 V3 is an alias for FYSETC_MINI_12864_2_1. Type A/B. NeoPixel RGB Backlight.
+//
+//#define MKS_MINI_12864_V3
+
+//
+// MKS LCD12864A/B with graphic controller and SD support. Follows MKS_MINI_12864 pinout.
+// https://www.aliexpress.com/item/33018110072.html
+//
+//#define MKS_LCD12864A
+//#define MKS_LCD12864B
+>>>>>>> Jyers/bugfix-JyersUI
 
 //
 // FYSETC variant of the MINI12864 graphic controller with SD support
@@ -2364,11 +2890,48 @@
 // DGUS Touch Display with DWIN OS. (Choose one.)
 // ORIGIN : https://www.aliexpress.com/item/32993409517.html
 // FYSETC : https://www.aliexpress.com/item/32961471929.html
+<<<<<<< HEAD
+=======
+// MKS    : https://www.aliexpress.com/item/1005002008179262.html
+//
+// Flash display with DGUS Displays for Marlin:
+//  - Format the SD card to FAT32 with an allocation size of 4kb.
+//  - Download files as specified for your type of display.
+//  - Plug the microSD card into the back of the display.
+//  - Boot the display and wait for the update to complete.
+//
+// ORIGIN (Marlin DWIN_SET)
+//  - Download https://github.com/coldtobi/Marlin_DGUS_Resources
+//  - Copy the downloaded DWIN_SET folder to the SD card.
+//
+// FYSETC (Supplier default)
+//  - Download https://github.com/FYSETC/FYSTLCD-2.0
+//  - Copy the downloaded SCREEN folder to the SD card.
+//
+// HIPRECY (Supplier default)
+//  - Download https://github.com/HiPrecy/Touch-Lcd-LEO
+//  - Copy the downloaded DWIN_SET folder to the SD card.
+//
+// MKS (MKS-H43) (Supplier default)
+//  - Download https://github.com/makerbase-mks/MKS-H43
+//  - Copy the downloaded DWIN_SET folder to the SD card.
+//
+// RELOADED (T5UID1)
+//  - Download https://github.com/Desuuuu/DGUS-reloaded/releases
+//  - Copy the downloaded DWIN_SET folder to the SD card.
+>>>>>>> Jyers/bugfix-JyersUI
 //
 //#define DGUS_LCD_UI_ORIGIN
 //#define DGUS_LCD_UI_FYSETC
 //#define DGUS_LCD_UI_HIPRECY
 //#define DGUS_LCD_UI_MKS
+<<<<<<< HEAD
+=======
+//#define DGUS_LCD_UI_RELOADED
+#if ENABLED(DGUS_LCD_UI_MKS)
+  #define USE_MKS_GREEN_UI
+#endif
+>>>>>>> Jyers/bugfix-JyersUI
 
 //
 // CR-6 OEM touch screen. A DWIN display with touch.
@@ -2408,13 +2971,26 @@
 #endif
 
 //
+<<<<<<< HEAD
+=======
+// PanelDue touch controller by Escher3D
+// http://escher3d.com/pages/order/products/product2.php
+//
+//#define PANELDUE
+
+//
+>>>>>>> Jyers/bugfix-JyersUI
 // Third-party or vendor-customized controller interfaces.
 // Sources should be installed in 'src/lcd/extui'.
 //
 //#define EXTENSIBLE_UI
 
 #if ENABLED(EXTENSIBLE_UI)
+<<<<<<< HEAD
   #define EXTUI_LOCAL_BEEPER // Enables use of local Beeper pin with external display
+=======
+  //#define EXTUI_LOCAL_BEEPER // Enables use of local Beeper pin with external display
+>>>>>>> Jyers/bugfix-JyersUI
 #endif
 
 //=============================================================================
@@ -2427,32 +3003,53 @@
  */
 
 //
+<<<<<<< HEAD
 // 480x320, 3.5", SPI Display From MKS
 // Normally used in MKS Robin Nano V2
+=======
+// 480x320, 3.5", SPI Display with Rotary Encoder from MKS
+// Usually paired with MKS Robin Nano V2 & V3
+>>>>>>> Jyers/bugfix-JyersUI
 //
 //#define MKS_TS35_V2_0
 
 //
 // 320x240, 2.4", FSMC Display From MKS
+<<<<<<< HEAD
 // Normally used in MKS Robin Nano V1.2
+=======
+// Usually paired with MKS Robin Nano V1.2
+>>>>>>> Jyers/bugfix-JyersUI
 //
 //#define MKS_ROBIN_TFT24
 
 //
 // 320x240, 2.8", FSMC Display From MKS
+<<<<<<< HEAD
 // Normally used in MKS Robin Nano V1.2
+=======
+// Usually paired with MKS Robin Nano V1.2
+>>>>>>> Jyers/bugfix-JyersUI
 //
 //#define MKS_ROBIN_TFT28
 
 //
 // 320x240, 3.2", FSMC Display From MKS
+<<<<<<< HEAD
 // Normally used in MKS Robin Nano V1.2
+=======
+// Usually paired with MKS Robin Nano V1.2
+>>>>>>> Jyers/bugfix-JyersUI
 //
 //#define MKS_ROBIN_TFT32
 
 //
 // 480x320, 3.5", FSMC Display From MKS
+<<<<<<< HEAD
 // Normally used in MKS Robin Nano V1.2
+=======
+// Usually paired with MKS Robin Nano V1.2
+>>>>>>> Jyers/bugfix-JyersUI
 //
 //#define MKS_ROBIN_TFT35
 
@@ -2463,7 +3060,11 @@
 
 //
 // 320x240, 3.2", FSMC Display From MKS
+<<<<<<< HEAD
 // Normally used in MKS Robin
+=======
+// Usually paired with MKS Robin
+>>>>>>> Jyers/bugfix-JyersUI
 //
 //#define MKS_ROBIN_TFT_V1_1R
 
@@ -2493,6 +3094,19 @@
 //#define ANET_ET5_TFT35
 
 //
+<<<<<<< HEAD
+=======
+// 1024x600, 7", RGB Stock Display with Rotary Encoder from BIQU-BX
+//
+//#define BIQU_BX_TFT70
+
+//
+// 480x320, 3.5", SPI Stock Display with Rotary Encoder from BIQU B1 SE Series
+//
+//#define BTT_TFT35_SPI_V1_0
+
+//
+>>>>>>> Jyers/bugfix-JyersUI
 // Generic TFT with detailed options
 //
 //#define TFT_GENERIC
@@ -2508,6 +3122,10 @@
   //#define TFT_RES_320x240
   //#define TFT_RES_480x272
   //#define TFT_RES_480x320
+<<<<<<< HEAD
+=======
+  //#define TFT_RES_1024x600
+>>>>>>> Jyers/bugfix-JyersUI
 #endif
 
 /**
@@ -2524,6 +3142,13 @@
 //#define TFT_COLOR_UI
 //#define TFT_LVGL_UI
 
+<<<<<<< HEAD
+=======
+#if ENABLED(TFT_LVGL_UI)
+  //#define MKS_WIFI_MODULE  // MKS WiFi module
+#endif
+
+>>>>>>> Jyers/bugfix-JyersUI
 /**
  * TFT Rotation. Set to one of the following values:
  *
@@ -2541,6 +3166,7 @@
 //
 // Ender-3 v2 OEM display. A DWIN display with Rotary Encoder.
 //
+<<<<<<< HEAD
 #define DWIN_CREALITY_LCD
 #if ENABLED(DWIN_CREALITY_LCD)
   //
@@ -2552,12 +3178,39 @@
 
 //
 // ADS7843/XPT2046 ADC Touchscreen such as ILI9341 2.8
+=======
+//#define DWIN_CREALITY_LCD
+
+//
+// Ender-3 v2 OEM display, enhanced.
+//
+//#define DWIN_CREALITY_LCD_ENHANCED
+
+//
+// Ender-3 v2 OEM display with enhancements by Jacob Myers
+//
+#define DWIN_CREALITY_LCD_JYERSUI
+
+//
+// MarlinUI for Creality's DWIN display (and others)
+//
+//#define DWIN_MARLINUI_PORTRAIT
+//#define DWIN_MARLINUI_LANDSCAPE
+
+//
+// Touch Screen Settings
+>>>>>>> Jyers/bugfix-JyersUI
 //
 //#define TOUCH_SCREEN
 #if ENABLED(TOUCH_SCREEN)
   #define BUTTON_DELAY_EDIT  50 // (ms) Button repeat delay for edit screens
   #define BUTTON_DELAY_MENU 250 // (ms) Button repeat delay for menus
 
+<<<<<<< HEAD
+=======
+  //#define TOUCH_IDLE_SLEEP 300 // (secs) Turn off the TFT backlight if set (5mn)
+
+>>>>>>> Jyers/bugfix-JyersUI
   #define TOUCH_SCREEN_CALIBRATION
 
   //#define TOUCH_CALIBRATION_X 12316
@@ -2566,6 +3219,13 @@
   //#define TOUCH_OFFSET_Y        257
   //#define TOUCH_ORIENTATION TOUCH_LANDSCAPE
 
+<<<<<<< HEAD
+=======
+  #if BOTH(TOUCH_SCREEN_CALIBRATION, EEPROM_SETTINGS)
+    #define TOUCH_CALIBRATION_AUTO_SAVE // Auto save successful calibration values to EEPROM
+  #endif
+
+>>>>>>> Jyers/bugfix-JyersUI
   #if ENABLED(TFT_COLOR_UI)
     //#define SINGLE_TOUCH_NAVIGATION
   #endif
@@ -2679,10 +3339,18 @@
     //#define NEOPIXEL2_INSERIES      // Default behavior is NeoPixel 2 in parallel
   #endif
 
+<<<<<<< HEAD
   // Use a single NeoPixel LED for static (background) lighting
   //#define NEOPIXEL_BKGD_LED_INDEX  0               // Index of the LED to use
   //#define NEOPIXEL_BKGD_COLOR { 255, 255, 255, 0 } // R, G, B, W
   //#define NEOPIXEL_BKGD_ALWAYS_ON                  // Keep the backlight on when other NeoPixels are off
+=======
+  // Use some of the NeoPixel LEDs for static (background) lighting
+  //#define NEOPIXEL_BKGD_INDEX_FIRST  0              // Index of the first background LED
+  //#define NEOPIXEL_BKGD_INDEX_LAST   5              // Index of the last background LED
+  //#define NEOPIXEL_BKGD_COLOR { 255, 255, 255, 0 }  // R, G, B, W
+  //#define NEOPIXEL_BKGD_ALWAYS_ON                   // Keep the backlight on when other NeoPixels are off
+>>>>>>> Jyers/bugfix-JyersUI
 #endif
 
 /**
@@ -2707,9 +3375,15 @@
  * Set this manually if there are extra servos needing manual control.
  * Set to 0 to turn off servo support.
  */
+<<<<<<< HEAD
 //#define NUM_SERVOS 3 // Servo index starts with 0 for M280 command
 
 // (ms) Delay  before the next move will start, to give the servo time to reach its target angle.
+=======
+//#define NUM_SERVOS 3 // Note: Servo index starts with 0 for M280-M282 commands
+
+// (ms) Delay before the next move will start, to give the servo time to reach its target angle.
+>>>>>>> Jyers/bugfix-JyersUI
 // 300ms is a good value but you can try less delay.
 // If the servo can't reach the requested position, increase it.
 #define SERVO_DELAY { 300 }
@@ -2719,3 +3393,9 @@
 
 // Edit servo angles with M281 and save to EEPROM with M500
 //#define EDITABLE_SERVO_ANGLES
+<<<<<<< HEAD
+=======
+
+// Disable servo with M282 to reduce power consumption, noise, and heat when not in use
+//#define SERVO_DETACH_GCODE
+>>>>>>> Jyers/bugfix-JyersUI
